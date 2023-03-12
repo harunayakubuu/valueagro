@@ -13,7 +13,7 @@ SECRET_KEY = config('SECRET_KEY')
 # DEBUG = True
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web-production-7fd1.up.railway.app', 'www.valueagrosynergy.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web-production-122e.up.railway.app', 'www.valueagrosynergy.com']
 
 
 # Application definition
