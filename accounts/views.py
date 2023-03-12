@@ -190,9 +190,9 @@ def signup(request):
                 'token': account_activation_token.make_token(user)
             })
             user.email_user(subject = subject, message = message)
-            # return HttpResponse("Registration successful. Activation sent to your email account")
-            messages.success(request, 'Registration successful. Account activation link has been sent to your email account.')
-            return redirect('accounts:account-success')
+            return HttpResponse("Registration successful. Activation sent to your email account")
+            # messages.success(request, 'Registration successful. Account activation link has been sent to your email account.')
+            # return redirect('accounts:account-success')
         else:
             messages.error(request, 'Check and correct the error below.')
     
