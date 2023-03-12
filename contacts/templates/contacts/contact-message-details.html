@@ -1,0 +1,61 @@
+{% extends "back-base.html" %}
+{% load static %}
+{% block head_title %}Message Details{% endblock head_title %}
+
+{% block msg_details_css %}
+    <link href="{% static 'backend/vendor/simplemde/simplemde.min.css' %}" rel="stylesheet" type="text/css" />
+{% endblock msg_details_css %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'contacts:contact-messages' %}">Messages</a></li>
+                        <li class="breadcrumb-item active">Message Details</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Message Details</h4>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">                     
+                    <div class="mt-3">
+                        <h5 class="font-18">{{ message.supject | upper }}!</h5>
+                        <hr/>
+                        <div class="d-flex mb-3 mt-1">
+                            <div class="w-100 overflow-hidden">
+                                <small class="float-end">{{ message.created_at | date }}</small>
+                                <h6 class="m-0 font-14">{{ message.name }}</h6>
+                                <small class="text-muted">{{ message.email }}</small><br>
+                                <small class="text-muted">{{ message.phone }}</small>
+                            </div>
+                        </div>
+
+                        <p><h4>Dear Aalue Agro Official,</h4></p>
+                        <p>{{ message.message | linebreaks }}</p>
+                        <hr/>
+                        <div class="mt-3">
+                            <a href="{% url 'contacts:contact-message-update' message.id %}" class="btn btn-secondary me-2"><i class=" ri-edit-2-line"></i> Update status</a>
+                            <a href="{% url 'contacts:contact-message-delete' message.pk %}" class="btn btn-danger"><i class="ri-delete-bin-line"></i> Delete message</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block message_details_js %}
+    <script src="{% static 'backend/vendor/simplemde/simplemde.min.js' %}"></script>
+    <script src="{% static 'backend/js/pages/demo.inbox.js' %}"></script>
+{% endblock message_details_js %}
+
+

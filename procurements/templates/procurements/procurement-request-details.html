@@ -1,0 +1,109 @@
+{% extends "back-base.html" %}
+{% load static %}
+{% block head_title %}Procurement Request Details{% endblock head_title %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'procurements:procurement-requests' %}">Procurement</a></li>
+                        <li class="breadcrumb-item active">Procurement Request Details</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Procurement Request Details</h4>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">                     
+                    <div class="mt-3">
+                        <h4>Procurement Request Details</h4>
+
+                        <div class="mt-4">
+                            <h6 class="font-14">Procurement Title</h6>
+                            <p>{{ procurement_request.title }}</p>
+                        </div>
+
+                        <div class="mt-2 mb-3">
+                            <h6 class="font-14">Description</h6>
+                            <p> {{ procurement_request.procurement_request_description | linebreaks }}</p>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-sm table-centered mb-0 font-14">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Item name</th>
+                                        <th>Item Description</th>
+                                        <th>Unit price</th>
+                                        <th>Quantity needed</th>
+                                        <th>Total</th>
+                                        <th>Reasons for item need</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        {% for p in procurement_request.procurementitem_set.all %}
+                                    <tr>
+                                        <td>{{ p.item_name }}</td>
+                                        <td>{{ p.description }}</td>
+                                        <td>{{ p.unit_price }}</td>
+                                        <td>{{ p.quantity_needed }}</td>
+                                        <td>{{ p.total_price }}</td>
+                                        <td>{{ p.reason_for_item_need }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    {% if request.user.role == 'DMP' %}
+                        <div class="mt-3">
+                            <p>
+                                <h3>MD Recmmendations</h3>
+                                MD's Approval Status: {{ procurement_request.md_approval_status }}<br />
+                                MD's Commentas: {{ procurement_request.md_comment }}
+                            </p>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <p>
+                                <h3>Chairman's Recmmendations</h3>
+                                Chairman's Approval Status: {{ procurement_request.chairman_approval_status }}<br />
+                                Chairman's Commentas: {{ procurement_request.chairman_comment }}
+                            </p>
+                        </div>                        
+                    {% endif %}
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="card">
+                {% if request.user.role == 'MD' %}
+                    {% if not procurement_request.chairman_approval_status == 'Approved' %}
+                        <a href="{% url 'procurements:procurement-md-approval' procurement_request.id %}" class="btn btn-primary btn-sm"> Treat </a>
+                    {% endif %}
+                {% endif %}
+
+                {% if request.user.role == 'CHAIRMAN' %}
+                    {% if procurement_request.md_approval_status == 'Approved' %}
+                        <a href="{% url 'procurements:procurement-chairman-approval' procurement_request.id %}" class="btn btn-primary btn-sm">Treat</a>
+                    {% else %}
+                        <h3>The MD has not treated this request.</h3>
+                    {% endif %}
+                {% endif %}
+                            
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+                        

@@ -1,0 +1,81 @@
+{% extends "front-base.html" %}
+{% load static %}
+{% block head_title %}{{ team_member.member_id }}{% endblock head_title %}
+
+
+{% block content %}
+
+    <div class="ltn__breadcrumb-area ltn__breadcrumb-area-6 ltn__breadcrumb-color-white bg-overlay-theme-black-90 bg-image" data-bg="{% static 'frontend/img/bg/9.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
+                        <div class="section-title-area ltn__section-title-2">
+                            <h1 class="section-title white-color">Personal Details</h1>
+                        </div>
+                        <div class="ltn__breadcrumb-list">
+                            <ul>
+                                <li><a href="{% url 'pages:index' %}">Home</a></li>
+                                <li>Team Member Details</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ltn__team-details-area mb-90">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="ltn__team-details-member-info text-center mb-40">
+                        <div class="team-details-img">
+                            <img src="{{ team_member.display_picture.url }}" alt="Team Member Image">
+                        </div>
+                        <h2>
+                            {% if team_member.user.get_full_name %}{{ team_member.user.get_full_name }}{% else %}{{ team_member.user.username | title }}{% endif %}
+                        </h2>
+                        <h6 class="text-uppercase ltn__secondary-color">{{ team_member.designation }}</h6>
+                        <div class="ltn__social-media-3">
+                            <ul>
+                                <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="ltn__team-details-member-info-details">
+                        <h1>About <em><small>{% if team_member.user.get_full_name %}{{ team_member.user.get_full_name | upper }}{% else %}{{ team_member.user.username | upper }}{% endif %}</small></em></h1>
+                        <p>
+                            {{ team_member.about | safe }}
+                        </p>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="ltn__team-details-member-about">
+                                    <ul>
+                                        <li><strong>Position:</strong> {{ team_member.designation }}</li>
+                                        <li><strong>Experience:</strong> 10+ Years</li>
+                                        <li><strong>Area of EXpertise:</strong> {{ team_member.aoe }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="ltn__team-details-member-about">
+                                    <ul>
+                                        <li><strong>Location:</strong> Kano</li>
+                                        <li><strong>Email:</strong> {{ team_member.user.email }}</li>
+                                        <li><strong>Phone:</strong> {{ team_member.user.phone_number }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

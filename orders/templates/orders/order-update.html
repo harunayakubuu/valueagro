@@ -1,0 +1,60 @@
+{% extends 'back-base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %} Order Update{% endblock head_title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'orders:orders-list' %}">Orders List</a></li>
+                        <li class="breadcrumb-item active">Order Update</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Order Update</h4>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        {% if request.user.is_authenticated %}
+            <div class="col-12">
+                {% include 'includes/alerts.html' %}
+                {% if not request.user.role == 'CUSTOMER' %}
+                    {% if not order.order_status == 'Complete' %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Order Payment Confirmation Form</h3>
+                            <form method="post" enctype="multipart/form-data" novalidate>{% csrf_token %}
+                                <div class="row mb-2">
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                        {{ order_update_form.order_status|as_crispy_field }}
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                        {# order_update_form|as_crispy_field #}
+                                    </div>
+                                    
+                                </div>
+                            
+                                <div class="row">
+                                    <div class="mb-3">
+                                        <input type="submit" value="Save" class="btn btn-success">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {% else %}
+                        This order is complete and cannot be updated again.
+                    {% endif %}
+                {% else %}
+                    <p>You currently do not have access to this page. Please</p>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}

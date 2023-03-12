@@ -1,0 +1,14 @@
+{% autoescape off %}
+
+Hi {{ user.username }},
+
+Your account has been successfully created. Please click the link below to activate your account.
+
+{{ protocol }}://{{ domain }}{% url 'accounts:account-activate' uidb64=uid token=token %}
+
+If clicking the link above does'nt work, please copy and paste the URL in a new browser window instead.
+
+Sincerely,
+Value Agro Allied.
+
+{% endautoescape %}
