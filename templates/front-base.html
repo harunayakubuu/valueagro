@@ -93,6 +93,7 @@
                                         <ul>
                                             {% if request.user.is_authenticated %}
                                                 <li><a href="{% url 'accounts:dashboard' %}">My Account</a></li>
+                                                <li><a href="{% url 'logout' %}">Logout</a></li>
                                             {% else %}
                                                 <li><a href="{% url 'login' %}">Sign in</a></li>
                                                 <li><a href="{% url 'signup' %}">Register</a></li>
@@ -233,17 +234,17 @@
                                 My Account
                             </a>
                         </li>
-                        <!--
+                       {% if request.user.is_authenticated %}
                         <li>
-                            <a href="wishlist.html" title="Wishlist">
+                            <a href="{% url 'logout' %}" title="Wishlist">
                                 <span class="utilize-btn-icon">
-                                    <i class="far fa-heart"></i>
+                                    <i class="fas fa-sign-out-alt"></i>
                                     <sup>3</sup>
                                 </span>
-                                Wishlist
+                                log out
                             </a>
                         </li>
-                        -->
+                        {% endif %}
                         <li>
                             <a href="cart.html" title="Shoping Cart">
                                 <span class="utilize-btn-icon">
