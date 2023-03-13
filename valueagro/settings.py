@@ -6,11 +6,11 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# SECRET_KEY = 'django-insecure-$in+(&qe3w9cs0_fc0)#@=#2qkydj4f_)p9d)idbqr(94jyp0_'
+# SECRET_KEY
 SECRET_KEY = config('SECRET_KEY')
 
 
-# DEBUG = True
+# DEBUG
 DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web-production-122e.up.railway.app', 'www.valueagrosynergy.com']
@@ -204,8 +204,8 @@ AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

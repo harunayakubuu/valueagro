@@ -8,19 +8,19 @@
 
             <a href="{% url 'accounts:dashboard' %}" class="logo-light">
                 <span class="logo-lg">
-                    <img src="{% static 'backend/assets/images/logo.png' %}" alt="logo" height="22">
+                    <img src="{% static 'frontend/img/logo-2.png' %}" alt="logo" height="22">
                 </span>
                 <span class="logo-sm">
-                    <img src="{% static 'backend/assets/images/logo-sm.png' %}" alt="small logo" height="22">
+                    <img src="{% static 'frontend/img/logo-2.png' %}" alt="small logo" height="22">
                 </span>
             </a>
 
             <a href="{% url 'accounts:dashboard' %}" class="logo-dark">
                 <span class="logo-lg">
-                    <img src="{% static 'backend/assets/images/logo-dark.png' %}" alt="dark logo" height="22">
+                    <img src="{% static 'frontend/img/logo.png' %}" alt="dark logo" height="22">
                 </span>
                 <span class="logo-sm">
-                    <img src="{% static 'backend/assets/images/logo-dark-sm.png' %}" alt="small logo" height="22">
+                    <img src="{% static 'frontend/img/logo.png' %}" alt="small logo" height="22">
                 </span>
             </a>
         </div>
@@ -72,7 +72,7 @@
                 <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
                     aria-expanded="false">
                     <span class="account-user-avatar"> 
-                        <img src="{% if request.user.profile.profile_picturer.url %} {{ request.user.profile.profile_picturer.url }} {% else %}{% static 'backend/assets/images/users/no-picture.png' %}{% endif %}" alt="user-image" class="rounded-circle">
+                        <img src="{% if request.user.profile.profile_picture.url %} {{ request.user.profile.profile_picture.url }} {% else %}{% static 'backend/assets/images/users/no-picture.png' %}{% endif %}" alt="user-image" class="rounded-circle">
                     </span>
                     <span>
                         <span class="account-user-name">

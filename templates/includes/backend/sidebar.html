@@ -14,10 +14,10 @@
 
     <a href="{% url 'accounts:dashboard' %}" class="logo logo-dark">
         <span class="logo-lg">
-            <img src="{% static 'backend/assets/images/logo-dark.png' %}" alt="dark logo">
+            <img src="{% static 'frontend/img/val-logo.png' %}" alt="dark logo">
         </span>
         <span class="logo-sm">
-            <img src="{% static 'backend/assets/images/logo-dark-sm.png' %}" alt="small logo">
+            <img src="{% static 'frontend/img/val-logo.png' %}" alt="small logo">
         </span>
     </a>
 
@@ -185,7 +185,7 @@
             {% endif %}
 
 
-            {% if request.user.role == 'MD' or request.user.role == 'CHAIRMAN' %}
+            <!--
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarInventories" aria-expanded="false" aria-controls="sidebarInventories"
                         class="side-nav-link">
@@ -200,7 +200,7 @@
                         </ul>
                     </div>
                 </li>
-            {% endif %}
+            -->
 
             {% if request.user.role == 'DT' %}
                 <li class="side-nav-item">
