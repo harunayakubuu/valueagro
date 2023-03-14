@@ -71,7 +71,7 @@
                                     </div>-->
                                     <h3>{{ product.product_name }}</h3>
                                     <div class="product-price">
-                                        <span>&#8358;{{ product.price }}/{{ product.price_unit }}</span>
+                                        <span>&#8358;{{ product.price | intcomma }}/{{ product.price_unit }}</span>
                                         <!--<del>$65.00</del>-->
                                     </div>
                                     <div class="modal-product-meta ltn__product-details-menu-1">

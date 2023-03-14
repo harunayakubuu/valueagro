@@ -42,7 +42,6 @@ class Product(models.Model):
     product_type    = models.ForeignKey('ProductType', verbose_name="Product Type", on_delete = models.DO_NOTHING)
     product_variety = models.ForeignKey('ProductVariety', verbose_name="Variety", on_delete = models.DO_NOTHING)
     product_name    = models.CharField(verbose_name='Product name', max_length = 255)
-    # price           = models.DecimalField(max_digits = 10, verbose_name="Offering_price", decimal_places = 2)
     price           = models.PositiveIntegerField(verbose_name="Offering_price")
     PRICE_UNIT_CHOICES = (
         ('Bag', 'Bag'),

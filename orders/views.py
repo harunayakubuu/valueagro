@@ -56,10 +56,6 @@ def user_orders(request):
     orders = Order.objects.order_by('-created_date').filter(user = user)
     return orders
 
-    # context = {
-    #     'orders': orders
-    # }
-    # return render(request, 'orders/orders-list.html', context)
 
 @login_required
 def my_orders(request):

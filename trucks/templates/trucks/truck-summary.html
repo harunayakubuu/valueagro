@@ -34,70 +34,76 @@
                 <div class="col-lg-12">
                     <h1><a href="{% url 'products:public-products' %}">Products</a></h1>
                     <div class="shoping-cart-inner">
-                     <strong>Manage Your Products</strong><br>
+                     <strong>Manage Your Products</strong><br><br>
+                        {% if truck %}
                         <div class="shoping-cart-table table-responsive">
                             <table class="table">
-                                <!-- <thead>
-                                    <th class="cart-product-remove">Remove</th>
-                                    <th class="cart-product-image">Image</th>
-                                    <th class="cart-product-info">Product</th>
+                                <thead>
+                                    <th class="cart-product-image" colspan="2">Product</th>
                                     <th class="cart-product-price">Price</th>
                                     <th class="cart-product-quantity">Quantity</th>
-                                    <th class="cart-product-subtotal">Subtotal</th>
-                                </thead> -->
+                                    <th class="cart-product-info">Delivery Address</th>
+                                    <th class="cart-product-price">Total</th>
+                                    <th class="cart-product-remove">&nbsp;</th>
+                                </thead>
                                 <tbody>
                                     {% for item in truck %}
                                     {% with product=item.product %}
                                         <div data-index="{{ product.id }}" class="product-item">
                                             <tr>
-                                                <td class="cart-product-remove">
-                                                    <div id="delete-button" class="delete-button" data-index="{{ product.id }}">
-                                                        <i class="fa fa-trash"></i>
-                                                    </div>
-                                                </td>
-                                                <td class="cart-product-image">
+                                                <td class="cart-product-image" colspan="2">
                                                     <img src="{{ product.main_picture.url }}" alt="#">
-                                                </td>
-                                                <td class="cart-product-info">
+                                                
                                                     {{ product.product_name }}
                                                 </td>
-                                                <td class="cart-product-price">&#8358;{{ product.price | intcomma }}</td>
+
+                                                <td class="cart-product-price">&#8358;{{ product.price | intcomma }}/{{ product.price_unit }}</td>
+                                                
                                                 <td class="cart-product-quantity">
                                                     <div class="cart-plus-minus">
-                                                        <input type="text" value="{{ item.qty }}" name="qtybutton" class="cart-plus-minus-box">
+                                                        <input type="text" value="{{ item.qty }}" name="qtybutton" id="qtybutton" class="cart-plus-minus-box">
                                                     </div>
                                                 </td>
                                                 <td class="cart-product-info">
                                                     <input type="text" name="address" value="{{ item.addr }}" class="cart" placeholder="Delivery Address">
+                                                    <br>
+                                                    <button type="submit" class="btn theme-btn-2 update-button" data-index="{{ product.id }}" id="update-button">Update</button> 
                                                 </td>
-                                                <td>
-                                                    <button type="submit" class="btn theme-btn-2">Update</button>    
+
+                                                <td class="cart-product-price">&#8358;{{ product.price | intcomma }}</td>
+
+                                                <td class="cart-product-remove">
+                                                    <div id="delete-button" class="delete-button" data-index="{{ product.id }}">
+                                                        <i class="fa fa-trash" style="color: red"></i>
+                                                    </div>
                                                 </td>
+                                                
                                             </tr>
                                         </div>
                                     {% endwith %}
-                                    {% empty %}
-                                        No products selected
                                     {% endfor %}
                                 </tbody>
                             </table>
 
                         </div>
+                        {% else %}
+                            No products selected
+                        {% endif %}
 
                          {% if truck %}
-                            <div class="">
-                                <div class="btn-wrapper text-right">
-                                    <span class"pull-right" style="font-size:20px"><strong>Sub Total: &#8358;<div id="subtotal" class="d-inline-flex">{{ truck.get_total_price | intcomma }}</div></strong><span>
-                                </div>
+                        <div class="">
+                            <div class="btn-wrapper text-right">
+                                <span class"pull-right" style="font-size:20px"><strong>Sub Total: &#8358;<div id="subtotal" class="d-inline-flex">{{ truck.get_total_price | intcomma }}</div></strong><span>
                             </div>
+                        </div>
 
-                            <div>
-                                <div class="shoping-cart-total  mt-50">
-                                    <div class="text-right">
-                                        <a href="{% url 'orders:place-order' %}" class="theme-btn-1 btn">Proceed to Place Order</a>
-                                    </div>
+                        <div>
+                            <div class="shoping-cart-total  mt-50">
+                                <div class="text-right">
+                                    <a href="{% url 'orders:place-order' %}" class="theme-btn-1 btn">Proceed to Place Order</a>
                                 </div>
                             </div>
+                        </div>
                         {% endif %}
                     </div>
                 </div>
@@ -123,9 +129,7 @@
                     document.getElementById("subtotal").innerHTML = json.subtotal
                     document.getElementById("truck-qty").innerHTML = json.qty
                 },
-                error: function (xhr, errmsg, err) {
-
-                },
+                error: function (xhr, errmsg, err) {},
             });
         })
 
@@ -138,8 +142,8 @@
                 url: '{% url "trucks:truck-update" %}',
                 data: {
                     productid: $(this).data('index'),
-                    productqty: $('#select'+ prodid +' option:selected').text(),
-                    deliveryaddr: $('#delivery-address').text(),
+                    productqty: $('#qtybutton'+ prodid +' ').val(),
+                    deliveryaddr: $('#delivery-address').val(),
                     csrfmiddlewaretoken: '{{ csrf_token }}',
                     action: 'post'
                 },

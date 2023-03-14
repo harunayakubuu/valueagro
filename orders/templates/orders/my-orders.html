@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="flex-grow-1 ms-3">
-                            <a href="{% url 'orders:order-details' order.transaction_id %}" class="font-16 fw-bold text-secondary">Order ID: {{ order.transaction_id }} <i class="mdi mdi-checkbox-marked-circle-outline text-success"></i></a>
+                            <a href="{% url 'orders:order-details' order.transaction_id %}" class="font-16 fw-bold text-secondary">Order ID: {{ order.transaction_id }} {% if order.order_status == 'Complete' %}<i class="mdi mdi-checkbox-marked-circle-outline text-success"></i>{% endif %}</a>
                             <p class="text-muted mb-0">{% for item in order.items.all %} {{ item.product.product_name }}, {% endfor %}</p>
                         </div>
                     </div>
@@ -58,24 +58,9 @@
                     <div class="row mt-2">
                         <div class="col-6">
                             <p class="text-muted fw-semibold mb-1">Items</p>
-                            <h3 class="my-0 text-muted fw-normal">16</h3>
+                            <h3 class="my-0 text-muted fw-normal"></h3>
                         </div>
-                        <!--
-                        <div class="col-6 text-end">
-                            <p class="text-muted fw-semibold mb-1">Assign to</p>
-                            <div class="multi-user">
-                                <a href="javascript:void(0);" class="d-inline-block">
-                                    <img src="assets/images/users/avatar-1.jpg" class="rounded-circle avatar-xs" alt="friend">
-                                </a>
-                                <a href="javascript:void(0);" class="d-inline-block">
-                                    <img src="assets/images/users/avatar-2.jpg" class="rounded-circle avatar-xs" alt="friend">
-                                </a>
-                                <a href="javascript:void(0);" class="d-inline-block">
-                                    <img src="assets/images/users/avatar-3.jpg" class="rounded-circle avatar-xs" alt="friend">
-                                </a>
-                            </div>
-                        </div>
-                        -->
+                        
                     </div>
                 </div>
             </div>

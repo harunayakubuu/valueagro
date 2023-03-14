@@ -67,7 +67,9 @@ class Truck():
 
 
     def get_total_price(self):
-        return sum(item['price'] * int(item['qty']) for item in self.truck.values())
+        # truck_size = 0
+        # if 
+        return sum(item['price'] * 600 * int(item['qty']) for item in self.truck.values())
 
 
     def save(self):

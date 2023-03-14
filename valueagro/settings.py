@@ -13,11 +13,11 @@ SECRET_KEY = config('SECRET_KEY')
 # DEBUG
 DEBUG = config('DEBUG', cast=bool)
 
+
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web-production-122e.up.railway.app', 'www.valueagrosynergy.com']
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,7 +53,9 @@ INSTALLED_APPS = [
     'trucks',
 ]
 
+
 SITE_ID = 1
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -100,7 +102,9 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'valueagro.wsgi.application'
+
 
 # Custom User Model Config
 AUTH_USER_MODEL = 'accounts.Account'
@@ -108,21 +112,22 @@ AUTH_USER_MODEL = 'accounts.Account'
 
 # Database Config
 
-import dj_database_url
+# import dj_database_url
 
-DATABASE_URL = config('DATABASE_URL')
-
-DATABASES = {
-    "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
-}
-
+# DATABASE_URL = config('DATABASE_URL')
 
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
+#     "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
 # }
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
 
 # DATABASES = {
 #     'default': {
@@ -137,7 +142,6 @@ DATABASES = {
 
 
 # Email Config
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -149,7 +153,6 @@ EMAIL_TIMEOUT = config('EMAIL_TIMEOUT', cast=int)
 
 
 # Password validation
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -167,7 +170,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Africa/Lagos'
@@ -194,18 +196,18 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 # Media Files Config
 
 #AWS Config
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_SIGNATURE_NAME = config('AWS_S3_SIGNATURE_NAME')
-AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME')
-AWS_S3_FILE_OVERWRITE = config('AWS_S3_FILE_OVERWRITE')
-AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+# AWS_S3_SIGNATURE_NAME = config('AWS_S3_SIGNATURE_NAME')
+# AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME')
+# AWS_S3_FILE_OVERWRITE = config('AWS_S3_FILE_OVERWRITE')
+# AWS_DEFAULT_ACL = None
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

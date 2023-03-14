@@ -21,6 +21,7 @@ class Order(models.Model):
         ('Confirmed', 'Confirmed'),
         ('Cancelled', 'Cancelled'),
         ('Declined', 'Declined'),
+        ('Processing', 'Processing'),
         ('Complete', 'Complete'),
     )
     order_status = models.CharField(max_length = 10, choices = ORDER_STATUS_CHOICES, default = 'Pending')
