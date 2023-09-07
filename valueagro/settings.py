@@ -14,7 +14,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web-production-71b6.up.railway.app', 'www.valueagrosynergy.com', 'valueagrosynergy.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web-production-4e3a.up.railway.app', 'www.valueagrosynergy.com', 'valueagrosynergy.com']
 
 
 # Application definition
@@ -61,8 +61,8 @@ INSTALLED_APPS = [
 ]
 
 
-SITE_ID = 1
-# SITE_ID = 2
+# SITE_ID = 1
+SITE_ID = 2
 
 
 MIDDLEWARE = [
