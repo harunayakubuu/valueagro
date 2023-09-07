@@ -1,0 +1,437 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <title>{% block head_title %}{% endblock head_title %} | Value Agro</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% block meta %}
+    
+    {% endblock meta %}
+    <link rel="shortcut icon" href="{% static 'frontend/img/favicon.png' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'frontend/css/font-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'frontend/css/plugins.css' %}">
+    <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'frontend/css/responsive.css' %}">
+    
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div class="body-wrapper">
+        
+        <header class="ltn__header-area ltn__header-5 gradient-color-4">
+
+            <div class="ltn__header-middle-area ltn__header-sticky ltn__sticky-bg-white sticky-active-into-mobile plr--9---">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="site-logo-wrap">
+                                <div class="site-logo">
+                                    <a href="{% url 'pages:index' %}"><img src="{% static 'frontend/img/val-logo.png' %}" alt="Logo"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col header-menu-column menu-color-white---">
+                            <div class="header-menu d-none d-xl-block">
+                                <nav>
+                                    <div class="ltn__main-menu">
+                                        <ul>
+                                            <li {% if '/' == request.path %}class="active" {% else %}{% endif %}>
+                                                <a href="{% url 'pages:index' %}">Home</a>
+                                            </li>
+                                            <li {% if 'about' in request.path %} class="active" {% else %} {% endif %}>
+                                                <a href="{% url 'pages:about-us' %}">About us</a>
+                                            </li>
+                                            <li {% if 'services' in request.path %} class="active" {% else %} {% endif %}>
+                                                <a href="{% url 'pages:services' %}">Our Services</a>
+                                            </li>
+                                            <li {% if 'products' in request.path %} class="active" {% else %} {% endif %}>
+                                                <a href="{% url 'products:public-products' %}">Products</a>
+                                            </li>
+                                            <li {% if 'activities' in request.path %} class="active" {% else %} {% endif %}>
+                                                <a href="{% url 'blog:public-activities' %}">Activities</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'pages:team' %}">Team</a>
+                                            </li>
+                                            <li {% if 'contact-form' in request.path %}class="active"{% else %}{% endif %}>
+                                                <a href="{% url 'contacts:contact-form' %}">Contact us</a>
+                                            </li>
+                                            <!--<li class="special-link"><a href="contact.html">GET A QUOTE</a></li>-->
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="ltn__header-options ltn__header-options-2">
+                            <!-- header-search-1 
+                            <div class="header-search-wrap">
+                                <div class="header-search-1">
+                                    <div class="search-icon">
+                                        <i class="icon-search for-search-show"></i>
+                                        <i class="icon-cancel  for-search-close"></i>
+                                    </div>
+                                </div>
+                                <div class="header-search-1-form">
+                                    <form id="#" method="get"  action="#">
+                                        <input type="text" name="search" value="" placeholder="Search here..."/>
+                                        <button type="submit">
+                                            <span><i class="icon-search"></i></span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            -->
+                            
+                            <div class="ltn__drop-menu user-menu">
+                                <ul>
+                                    <li>
+                                        <a href="#"><i class="icon-user"></i></a>
+                                        <ul>
+                                            {% if request.user.is_authenticated %}
+                                                <li><a href="{% url 'accounts:dashboard' %}">My Account</a></li>
+                                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                                            {% else %}
+                                                <li><a href="{% url 'login' %}">Sign in</a></li>
+                                                <li><a href="{% url 'signup' %}">Register</a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mini-cart-icon">
+                                <a href="{% url 'trucks:truck-summary' %}">
+                                    <img src="{% static 'frontend/img/icons/icon-img/14.png' %}" width="25px" height="20px" alt="#">
+                                    {% with total_qty=truck|length %}
+                                        <sup id="truck-qty">
+                                            {% if total_qty > 0 %}
+                                                {{ total_qty }}
+                                            {% else %}
+                                                0
+                                            {% endif %}
+                                        </sup>
+                                    {% endwith %}
+                                </a>
+                            </div>
+
+                            <div class="mobile-menu-toggle d-xl-none">
+                                <a href="#ltn__utilize-mobile-menu" class="ltn__utilize-toggle">
+                                    <svg viewBox="0 0 800 600">
+                                        <path d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200" id="top"></path>
+                                        <path d="M300,320 L540,320" id="middle"></path>
+                                        <path d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190" id="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) "></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!--
+        <div id="ltn__utilize-cart-menu" class="ltn__utilize ltn__utilize-cart-menu">
+            <div class="ltn__utilize-menu-inner ltn__scrollbar">
+                <div class="ltn__utilize-menu-head">
+                    <span class="ltn__utilize-menu-title">Cart</span>
+                    <button class="ltn__utilize-close">×</button>
+                </div>
+                <div class="mini-cart-product-area ltn__scrollbar">
+                    <div class="mini-cart-item clearfix">
+                        <div class="mini-cart-img">
+                            <a href="#"><img src="img/product/1.png" alt="Image"></a>
+                            <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
+                        </div>
+                        <div class="mini-cart-info">
+                            <h6><a href="#">Red Hot Tomato</a></h6>
+                            <span class="mini-cart-quantity">1 x $65.00</span>
+                        </div>
+                    </div>
+                    <div class="mini-cart-item clearfix">
+                        <div class="mini-cart-img">
+                            <a href="#"><img src="img/product/2.png" alt="Image"></a>
+                            <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
+                        </div>
+                        <div class="mini-cart-info">
+                            <h6><a href="#">Vegetables Juices</a></h6>
+                            <span class="mini-cart-quantity">1 x $85.00</span>
+                        </div>
+                    </div>
+                    <div class="mini-cart-item clearfix">
+                        <div class="mini-cart-img">
+                            <a href="#"><img src="img/product/3.png" alt="Image"></a>
+                            <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
+                        </div>
+                        <div class="mini-cart-info">
+                            <h6><a href="#">Orange Sliced Mix</a></h6>
+                            <span class="mini-cart-quantity">1 x $92.00</span>
+                        </div>
+                    </div>
+                    <div class="mini-cart-item clearfix">
+                        <div class="mini-cart-img">
+                            <a href="#"><img src="img/product/4.png" alt="Image"></a>
+                            <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
+                        </div>
+                        <div class="mini-cart-info">
+                            <h6><a href="#">Orange Fresh Juice</a></h6>
+                            <span class="mini-cart-quantity">1 x $68.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mini-cart-footer">
+                    <div class="mini-cart-sub-total">
+                        <h5>Subtotal: <span>$310.00</span></h5>
+                    </div>
+                    <div class="btn-wrapper">
+                        <a href="cart.html" class="theme-btn-1 btn btn-effect-1">View Cart</a>
+                        <a href="cart.html" class="theme-btn-2 btn btn-effect-2">Checkout</a>
+                    </div>
+                    <p>Free Shipping on All Orders Over $100!</p>
+                </div>
+
+            </div>
+        </div>
+        -->
+    
+        <div id="ltn__utilize-mobile-menu" class="ltn__utilize ltn__utilize-mobile-menu">
+            <div class="ltn__utilize-menu-inner ltn__scrollbar">
+                <div class="ltn__utilize-menu-head">
+                    <div class="site-logo">
+                        <a href="{% url 'pages:index' %}"><img src="{% static 'frontend/img/val-logo.png' %}" alt="Logo"></a>
+                    </div>
+                    <button class="ltn__utilize-close">×</button>
+                </div>
+                <!--
+                <div class="ltn__utilize-menu-search-form">
+                    <form action="#">
+                        <input type="text" placeholder="Search...">
+                        <button><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                -->
+                <div class="ltn__utilize-menu">                                              
+                    <ul>
+                        <li><a href="{% url 'pages:index' %}">Home</a></li>
+                        <li><a href="{% url 'pages:about-us' %}">About us</a></li>
+                        <li><a href="{% url 'products:public-products' %}">Products</a></li>
+                        <li><a href="{% url 'faqs:faqs' %}">FAQs</a></li>
+                        <li><a href="{% url 'blog:public-activities' %}">Activities</a></li> 
+                        <li><a href="{% url 'pages:team' %}">Team</a></li>
+                        <li><a href="{% url 'contacts:contact-form' %}">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="ltn__utilize-buttons ltn__utilize-buttons-2">
+                    <ul>
+                        <li>
+                            <a href="{% if request.user.is_authenticated %} {% url 'accounts:dashboard' %} {% else %} {% url 'login' %} {% endif %}" title="My Account">
+                                <span class="utilize-btn-icon">
+                                    <i class="far fa-user"></i>
+                                </span>
+                                My Account
+                            </a>
+                        </li>
+                       
+                        <li>
+                            <a href="{% url 'trucks:truck-summary' %}" title="Shoping Cart">
+                                <span class="utilize-btn-icon">
+                                    <img src="{% static 'frontend/img/icons/icon-img/14.png' %}" width="25px" height="20px" alt="#">
+                                    {% with total_qty=truck|length %}
+                                        <sup id="truck-qty">
+                                            {% if total_qty > 0 %}
+                                                {{ total_qty }}
+                                            {% else %}
+                                                0
+                                            {% endif %}
+                                        </sup>
+                                    {% endwith %}
+                                </span>
+                                Your Truck
+                            </a>
+                        </li>
+
+                        {% if request.user.is_authenticated %}
+                        <li>
+                            <a href="{% url 'logout' %}" title="Wishlist">
+                                <span class="utilize-btn-icon">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <!--<sup>3</sup>-->
+                                </span>
+                                log out
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                    </ul>
+                </div>
+                <div class="ltn__social-media-2">
+                    <ul>
+                        <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
+                        <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="ltn__utilize-overlay"></div>
+
+        {% block content %}
+        
+        {% endblock content %}
+        
+        <footer class="ltn__footer-area  ">
+            <div class="footer-top-area  section-bg-2 plr--5">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-5 col-md-6 col-sm-6 col-12">
+                            <div class="footer-widget footer-about-widget">
+                                <div class="footer-logo">
+                                    <div class="site-logo">
+                                        <img src="{% static 'frontend/img/val-logo-2.png' %}" alt="Logo">
+                                    </div>
+                                </div>
+                                
+                                <div class="footer-address">
+                                    <ul>
+                                        <li>
+                                            <div class="footer-address-icon">
+                                                <i class="icon-placeholder"></i>
+                                            </div>
+                                            <div class="footer-address-info">
+                                                <strong>Head Office:</strong>
+                                                <p>5th Floor, Accomoddations Wing, National Engineering Center, Off National Mosque, Labour House Road, Central Business District, Abuja.</p>
+
+                                                <strong>Operations Office:</strong>
+                                                <p>No.30, Makama Street, Plot 238 Agwagwa Avenue, Near Maryam Abacha University, Hotoro GRA, Kano.</p>   
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="footer-address-icon">
+                                                <i class="icon-call"></i>
+                                            </div>
+                                            <div class="footer-address-info">
+                                                <p>(+234) 8039397766, <br> (+234) 7035215809</a></p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="footer-address-icon">
+                                                <i class="icon-mail"></i>
+                                            </div>
+                                            <div class="footer-address-info">
+                                                <p>info@valueagrosynergy.com</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="ltn__social-media mt-20">
+                                    <ul>
+                                        <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
+                                        <li><a href="#" title="Youtube"><i class="fab fa-youtube"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-6 col-sm-6 col-12">
+                            <div class="footer-widget footer-menu-widget clearfix">
+                                <h4 class="footer-title">Useful Links</h4>
+                                <div class="footer-menu">
+                                    <ul>
+                                        <li><a href="{% url 'pages:about-us' %}">About us</a></li>
+                                        <li><a href="{% url 'blog:public-activities' %}">Our Activities</a></li>
+                                        <li><a href="{% url 'products:public-products' %}">Products</a></li>
+                                        <li><a href="{% url 'faqs:faqs' %}">FAQ</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-6 col-sm-6 col-12">
+                            <div class="footer-widget footer-menu-widget clearfix">
+                                <h4 class="footer-title">Services</h4>
+                                <div class="footer-menu">
+                                    <ul>
+                                        <li><a href="{% url 'pages:services' %}">Services we Offer</a></li>
+                                        <li><a href="{% url 'pages:terms-and-conditions' %}">Terms &amp; Conditions</a></li>
+                                        <li><a href="{% url 'pages:privacy-policy' %}">Privacy Policy</a></li>                                            
+                                        <li><a href="{% url 'login' %}">Log in</a></li>                                            
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-6 col-sm-6 col-12">
+                            <div class="footer-widget footer-menu-widget clearfix">
+                                <h4 class="footer-title">Customer Care</h4>
+                                <div class="footer-menu">
+                                    <ul>
+                                        <li><a href="{% url 'contacts:contact-form' %}">Contact us</a></li>
+                                    </ul>
+                                    <ul>
+                                        <li><a href="{% url 'newsletters:subscription_form' %}">Newsletter</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="col-xl-3 col-md-6 col-sm-12 col-12">
+                            <div class="footer-widget footer-newsletter-widget">
+                                <h4 class="footer-title">Newsletter</h4>
+                                <p>Subscribe to our weekly Newsletter and receive updates via email.</p>
+                                <div class="footer-newsletter">
+                                    <form action="#">
+                                        <input type="email" name="email" placeholder="Email*">
+                                        <div class="btn-wrapper">
+                                            <button class="theme-btn-1 btn" type="submit"><i class="fas fa-location-arrow"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    -->
+                    </div>
+                </div>
+            </div>
+            <div class="ltn__copyright-area ltn__copyright-2 section-bg-2  ltn__border-top-2--- plr--5">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="ltn__copyright-design clearfix">
+                                <p>&copy; {% now 'Y' %} Value Agro. All rights reserved</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12 align-self-center">
+                            <div class="ltn__copyright-menu text-right">
+                                <ul>
+                                    <li><a href="{% url 'pages:terms-and-conditions' %}">Terms & Conditions</a></li>
+                                    <li><a href="{% url 'pages:privacy-policy' %}">Privacy & Policy</a></li>
+                                    <li><a href="#">Integral Solutions</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <div class="preloader d-none" id="preloader">
+            <div class="preloader-inner">
+                <div class="spinner">
+                    <div class="dot1"></div>
+                    <div class="dot2"></div>
+                </div>
+            </div>
+        </div>
+
+        <script src="{% static 'frontend/js/plugins.js' %}"></script>
+        <script src="{% static 'frontend/js/main.js' %}"></script>
+    
+    </body>
+</html>
+

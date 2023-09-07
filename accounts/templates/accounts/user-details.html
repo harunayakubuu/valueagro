@@ -1,0 +1,270 @@
+{% extends 'back-base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}{{ user.username }} {% endblock head_title %}
+
+{% block content %}
+
+    {% if request.user.is_authenticated %}
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'accounts:users' %}">Users</a></li>
+                            <li class="breadcrumb-item active">{{ user.username }}</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title">{{ user.username }}</h4>
+                </div>
+            </div>
+        </div>
+
+        {% if request.user.role == 'DAHR' or request.user.role == 'CHAIRMAN' or request.user.role == 'MD' %}
+            <div class="row">
+                <div class="col-lg-12 col-md-6 col-xxl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>{{ user.username | upper }} </h4>
+                            <p>
+                                <table class="table table-sm table-centered mb-0 font-14">
+                                                
+                                    <tbody>
+                                        <tr>
+                                            <td>Username: </td>
+                                            <td>{{ user.username }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Full name: </td>
+                                            <td>{{ user.user.get_full_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td>{{ user.email }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Full name: </td>
+                                            <td>{{ user.phone_number }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Status </td>
+                                            <td>{% if user.is_active %} Active {% else %} Not active {% endif %}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Role</td>
+                                            <td>
+                                                {% if user.role == "CUSTOMER" %}
+                                                    Customer
+                                                {% elif user.role == "CHAIRMAN" %}
+                                                    Chairman
+                                                {% elif user.role == "MD" %}
+                                                    Managing Director
+                                                {% elif user.role == "DAHR" %}
+                                                    Director Admin &amp; Human Resource
+                                                {% elif user.role == "AGENT" %}
+                                                    Field Agent
+                                                {% elif user.role == "DT" %}
+                                                    Director Technical
+                                                {% elif user.role == "DF" %}
+                                                    Director Finance
+                                                {% elif user.role == "DMP" %}
+                                                    Director Marketing &amp; Procurement
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Date Joined</td>
+                                            <td>{{ user.date_joined | date }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Last Login</td>
+                                            <td>{{ user.last_login | date }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>                                
+                            </p>
+                            {% if request.user.role == "DAHR" %}                       
+                                <a href="{% url 'accounts:user-role-edit' user.id %}" class="btn btn-sm btn-success"><i class="mdi mdi-pencil me-1"></i> Edit Permission</a>
+                                <a href="{% url 'accounts:user-delete' user.pk %}" class="btn btn-sm btn-danger ms-2"><i class="mdi mdi-delete me-1"></i> Delete User</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if user.role == "CUSTOMER" %}
+                <div class="row">
+                    <div class="col-lg-12 col-md-6 col-sm-12 col-xxl-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4>{% if user.user.get_full_name %}
+                                        {{ user.user.get_full_name | title }}
+                                    {% else %}
+                                        {{ user.username | lower }}
+                                    {% endif %} - KYC Information 
+                                </h4>
+     
+                                <p>
+                                    {% if user.companyinformation %}
+                                    <table class="table table-sm table-centered mb-3 font-14">
+                                                    
+                                        <tbody>
+                                            <h5>Company Information</h5>
+                                            <tr>
+                                                <td>Company Name </td>
+                                                <td>{{ user.companyinformation.company_name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>State </td>
+                                                <td>{{ user.companyinformation.company_state }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>City </td>
+                                                <td>{{ user.companyinformation.company_city }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Phone </td>
+                                                <td>{{ user.companyinformation.company_phone }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Email </td>
+                                                <td>{{ user.companyinformation.company_email }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Website </td>
+                                                <td>{{ user.companyinformation.company_website }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Company Type </td>
+                                                <td>{{ user.companyinformation.company_type }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Business Type </td>
+                                                <td>{{ user.companyinformation.nature_of_business }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reg. No. </td>
+                                                <td>{{ user.companyinformation.company_registration_number }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tax Reg. No </td>
+                                                <td>{{ user.companyinformation.tax_registration_number }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>FSS Reg. No. </td>
+                                                <td>{{ user.companyinformation.fss_registration_number }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <table class="table table-sm table-centered mb-3 font-14">
+                                        <tbody>
+                                            <h5>Warehouse Information</h5>
+
+                                            <tr>
+                                                <td>Warehouse address </td>
+                                                <td>{{ user.companyinformation.warehouseinformation.address }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>State </td>
+                                                <td>{{ user.companyinformation.warehouseinformation.state }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>LGA </td>
+                                                <td>{{ user.companyinformation.company.lga }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Town/City </td>
+                                                <td>{{ user.companyinformation.company.town_city }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Warehouse Manager </td>
+                                                <td>{{ user.companyinformation.company.warehouse_manager }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Manager Phone </td>
+                                                <td>{{ user.companyinformation.company.manager_phone }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Manager Phone </td>
+                                                <td>{{ user.companyinformation.company.manager_email }}</td>
+                                            </tr>
+                                            
+
+                                        </tbody>
+                                    </table>
+
+                                    <table class="table table-sm table-centered mb-3 font-14">
+                                        <tbody>
+                                            <h5>Shop Information</h5>
+
+                                            <tr>
+                                                <td>Shop address </td>
+                                                <td>{{ user.companyinformation.warehouseinformation.address }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>State </td>
+                                                <td>{{ user.companyinformation.warehouseinformation.state }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>LGA </td>
+                                                <td>{{ user.companyinformation.company.lga }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Town/City </td>
+                                                <td>{{ user.companyinformation.company.town_city }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Shop Keeper </td>
+                                                <td>{{ user.companyinformation.company.warehouse_manager }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Phone </td>
+                                                <td>{{ user.companyinformation.company.manager_phone }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Phone </td>
+                                                <td>{{ user.companyinformation.company.manager_email }}</td>
+                                            </tr>
+                                            
+
+                                        </tbody>
+                                    </table>
+                                    {% else %}
+                                        No records
+                                    {% endif %}                             
+                                </p>
+
+                                {% if request.user.role == "DAHR" %}                       
+                                    <a href="{% url 'accounts:user-role-edit' user.id %}" class="btn btn-sm btn-success"><i class="mdi mdi-pencil me-1"></i> Edit Permission</a>
+                                    <a href="{% url 'accounts:user-delete' user.pk %}" class="btn btn-sm btn-danger ms-2"><i class="mdi mdi-delete me-1"></i> Delete User</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if user.role == 'CUSTOMER' %}
+                <div class="row mb-4">        
+                    <h5 class="mt-0 task-header">
+                        Delivery Addresses
+                        {% if user.get_full_name %}
+                            {{ user.get_full_name }}
+                        {% else %}
+                            {{ user.username }}
+                        {% endif %} <!--(3)-->
+                    </h5>
+                </div>
+            {% endif %}
+
+        {% else %}
+            <p>You currently do not have access to this page. Please <a href="{% url 'contacts:contact-form' %}">contact us</a> for further assistance.</p>
+        {% endif %}
+    {% else %}
+        <p>This page not available.</p>
+    {% endif %}
+
+{% endblock content %}

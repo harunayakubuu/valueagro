@@ -1,0 +1,211 @@
+{% extends "back-base.html" %}
+
+{% load static %}
+{% block head_title %}Profile{% endblock head_title %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Profile</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Profile</h4>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="card bg-primary">
+
+                <div class="card-body profile-user-box">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <div class="avatar-lg">
+                                        {% if request.user.profile.profile_picture %}
+                                            <img src="{{ request.user.profile.profile_picture.url }}" alt="" class="rounded-circle img-thumbnail">
+                                        {% else %}
+                                            <img src="{% static 'backend/assets/images/users/no-picture.png' %}" alt="" class="rounded-circle img-thumbnail">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div>
+                                        <h4 class="mt-1 mb-1 text-white">{% if request.user.get_full_name %}{{ request.user.get_full_name }}{% else %}{{ request.user.username|upper }}{% endif %}</h4>
+                                        <p class="font-13 text-white-50">
+                                            {% if request.user.role == 'CHAIRMAN' %}
+                                                Chairman
+                                            {% elif request.user.role == 'MD' %}
+                                                MD
+                                            {% elif request.user.role == 'DAHR' %}
+                                                Director Admin &amp; Human Resource
+                                            {% elif request.user.role == 'AGENT' %}
+                                                Field Agent
+                                            {% elif request.user.role == 'CUSTOMER' %}
+                                                Customer
+                                            {% elif request.user.role == 'DT' %}
+                                                Director Technical
+                                            {% elif request.user.role == 'DMP' %}
+                                                Director Marketing &amp; Procurement
+                                            {% elif request.user.role == 'DF' %}
+                                                Director Finance
+                                            {% else %}
+                                            {% endif %}
+                                        </p>
+
+                                        <ul class="mb-0 list-inline text-light">
+                                            <li class="list-inline-item me-3">
+                                                <h5 class="mb-1 text-white">Date Joined</h5>
+                                                <p class="mb-0 font-13 text-white-50">{{ request.user.date_joined }}</p>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <h5 class="mb-1 text-white">Last Log in</h5>
+                                                <p class="mb-0 font-13 text-white-50">{{ request.user.last_login }}</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="text-center mt-sm-0 mt-3 text-sm-end">
+                                <button type="button" class="btn btn-light">
+                                    <a href="{% url 'accounts:user-account-edit' %}"><i class="mdi mdi-account-edit me-1"></i>Edit Profile</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mt-0 mb-3">Information</h4>
+                    <p class="text-muted font-13">
+                       
+                    </p>
+
+                    <hr/>
+
+                    <div class="text-start">
+                        <p class="text-muted"><strong>Full Name :</strong> <span class="ms-2">{% if request.user.get_full_name %}{{ request.user.get_full_name }}{% else %} Profile not updated {% endif %}</span></p>
+
+                        <p class="text-muted"><strong>Mobile :</strong><span class="ms-2">{{ request.user.phone_number }}</span></p>
+
+                        <p class="text-muted"><strong>Email :</strong> <span class="ms-2">{{ request.user.email }}</span></p>
+
+                        <p class="text-muted"><strong>Location :</strong> <span class="ms-2">No updated </span></p>
+                        <!--
+                        <p class="text-muted"><strong>Languages :</strong>
+                            <span class="ms-2"> English, German, Spanish </span>
+                        </p>
+                        <p class="text-muted mb-0" id="tooltip-container"><strong>Elsewhere :</strong>
+                            <a class="d-inline-block ms-2 text-muted" data-bs-container="#tooltip-container" data-bs-placement="top" data-bs-toggle="tooltip" href="#" title="Facebook"><i class="mdi mdi-facebook"></i></a>
+                            <a class="d-inline-block ms-2 text-muted" data-bs-container="#tooltip-container" data-bs-placement="top" data-bs-toggle="tooltip" href="#" title="Twitter"><i class="mdi mdi-twitter"></i></a>
+                            <a class="d-inline-block ms-2 text-muted" data-bs-container="#tooltip-container" data-bs-placement="top" data-bs-toggle="tooltip" href="#" title="Skype"><i class="mdi mdi-skype"></i></a>
+                        </p>
+                        -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if request.user.role == 'CUSTOMER' %}
+        
+            <div class="col-xl-8">
+                {% if request.user.order %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title mb-3">My Orders History</h4>
+
+                            <div class="table-responsive">
+                                <table class="table table-hover table-centered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</a></th>
+                                            <th>Product</th>
+                                            <th>Payment Status</th>
+                                            <th>Orders Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in my_orders %}
+                                        <tr>
+                                            <td><a href="#">00125</a></td>
+                                            <td>Fertilizer</td>
+                                            <td><span class="badge bg-primary">Paid</span></td>
+                                            <td>Delivered</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+    {% if request.user.role == 'CUSTOMER' %}
+        <div class="row">
+            {% include 'includes/alerts.html' %}
+            <div class="col-lg-12">
+                {% if request.user.profile.deliveryaddress %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>My Addresses</h4>
+                            <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>Address</th>
+                                        <th>City/Town</th>
+                                        <th>State</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for address in my_delivery_addresses %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'addresses:address-edit' address.id %}"> {{ address.address }}</a></td>
+                                        <td>{{ address.city }}</td>
+                                        <td>{{ address.state }}</td>
+                                        <td><a href="{% url 'addresses:address-delete' address.id %}">Delete</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if request.user.is_authenticated %}
+        <div class="">
+            <a href = "{% url 'accounts:account-delete' %}" class="btn btn-danger btn-md">Delete Account </a>
+        </div>
+    {% endif %}
+
+{% endblock content %}
+    

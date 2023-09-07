@@ -1,0 +1,67 @@
+{% extends "back-base.html" %}
+{% load static %}
+
+{% block head_title %}Users{% endblock head_title %}
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Users</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Users
+                    {% if request.user.role == "DAHR" %}
+                        <a href="{% url 'accounts:staff-user-create' %}" class="btn btn-success btn-sm ms-3">Add New Staff User</a>
+                    {% endif %}                    
+                </h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if request.user.role == 'DAHR' or request.user.role == 'MD' or request.user.role == 'CHAIRMAN' %}
+        <div class="card">
+            {% include 'includes/alerts.html' %}
+            <div class="card-body">
+                <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
+                <thead>
+                    <tr>
+                        <th>SN.</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Full-name</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Date Joined</th>
+                        <th>Last Login</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{% url 'accounts:user-details' user.username %}">{{ user.username }}</a></td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.get_full_name }}</td>
+                        <td>{{ user.role }}</td>
+                        <td>{% if user.is_active %}Active{% else %}Not active{% endif %}</td>
+                        <td>{{ user.date_joined | date }}</td>
+                        <td>{{ user.last_login | date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
+            <p>You do not have access to this page.</p>
+        {% endif %}
+    </div>
+
+{% endblock content %}

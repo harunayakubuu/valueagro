@@ -1,0 +1,106 @@
+{% extends 'back-base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Fleet Management{% endblock head_title %}
+
+{% block content %}
+
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                            
+                            <li class="breadcrumb-item active">Fleet Management</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title">Fleet Management</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-sm-4">
+                <a href="{% url 'logistics:vehicle-register' %}" class="btn btn-danger rounded-pill mb-3"><i class="mdi mdi-plus"></i>Add Vehicle</a>
+            </div>
+            
+            <div class="col-sm-8">
+                <div class="text-sm-end">
+                    Fleet Management
+                </div>
+            </div>
+        </div> 
+
+            <div class="row">
+                <div class="col-md-6 col-xxl-3">
+                    <!-- project card -->
+                    <div class="card d-block">
+                        <div class="card-body">
+                            <div class="dropdown card-widgets">
+                                <a href="#" class="dropdown-toggle arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="ri-more-fill"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-pencil me-1"></i>Edit</a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-delete me-1"></i>Delete</a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-email-outline me-1"></i>Invite</a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-exit-to-app me-1"></i>Leave</a>
+                                </div>
+                            </div>
+                            <!-- project title-->
+                            <h4 class="mt-0">
+                                <a href="apps-projects-details.html" class="text-title">App design and development</a>
+                            </h4>
+                            <div class="badge bg-success">Finished</div>
+
+                            <p class="text-muted font-13 my-3">With supporting text below as a natural lead-in to additional contenposuere erat a ante...<a href="javascript:void(0);" class="fw-bold text-muted">view more</a>
+                            </p>
+
+                            <!-- project detail-->
+                            <p class="mb-1">
+                                <span class="pe-2 text-nowrap mb-2 d-inline-block">
+                                    <i class="mdi mdi-format-list-bulleted-type text-muted"></i>
+                                    <b>21</b> Tasks
+                                </span>
+                                <span class="text-nowrap mb-2 d-inline-block">
+                                    <i class="mdi mdi-comment-multiple-outline text-muted"></i>
+                                    <b>741</b> Comments
+                                </span>
+                            </p>
+                            <div id="tooltip-container">
+                                <a href="javascript:void(0);" data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="top" title="Mat Helme" class="d-inline-block">
+                                    <img src="assets/images/users/avatar-6.jpg" class="rounded-circle avatar-xs" alt="friend">
+                                </a>
+
+                                <a href="javascript:void(0);" data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="top" title="Michael Zenaty" class="d-inline-block">
+                                    <img src="assets/images/users/avatar-7.jpg" class="rounded-circle avatar-xs" alt="friend">
+                                </a>
+
+                                <a href="javascript:void(0);" data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="top" title="James Anderson" class="d-inline-block">
+                                    <img src="assets/images/users/avatar-8.jpg" class="rounded-circle avatar-xs" alt="friend">
+                                </a>
+                                <a href="javascript:void(0);" class="d-inline-block text-muted fw-bold ms-2">
+                                    +7 more
+                                </a>
+                            </div>
+                        </div> <!-- end card-body-->
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item p-3">
+                                <!-- project progress-->
+                                <p class="mb-2 fw-bold">Progress <span class="float-end">100%</span></p>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                    </div><!-- /.progress-bar -->
+                                </div><!-- /.progress -->
+                            </li>
+                        </ul>
+                    </div> <!-- end card-->
+                </div>
+            </div>
+{% endblock content %}

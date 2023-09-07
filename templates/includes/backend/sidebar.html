@@ -1,0 +1,326 @@
+{% load static %}
+
+{% if request.user.is_authenticated %} 
+<div class="leftside-menu">
+
+    <a href="{% url 'accounts:dashboard' %}" class="logo logo-light">
+        <span class="logo-lg">
+            <img src="{% static 'frontend/img/val-logo-2.png' %}" alt="logo">
+        </span>
+        <span class="logo-sm">
+            <img src="{% static 'frontend/img/val-logo-2.png' %}" alt="small logo">
+        </span>
+    </a>
+
+    <a href="{% url 'accounts:dashboard' %}" class="logo logo-dark">
+        <span class="logo-lg">
+            <img src="{% static 'frontend/img/val-logo.png' %}" alt="dark logo">
+        </span>
+        <span class="logo-sm">
+            <img src="{% static 'frontend/img/val-logo.png' %}" alt="small logo">
+        </span>
+    </a>
+
+    <button type="button" class="btn button-sm-hover p-0" data-bs-toggle="tooltip" data-bs-placement="right" title="Show Full Sidebar">
+        <i class="ri-checkbox-blank-circle-line align-middle"></i>
+    </button>
+
+    <div class="h-100" id="leftside-menu-container" data-simplebar>
+        <div class="leftbar-user">
+            <a href="pages-profile.html">
+                <img src="{% if request.user.profile.profile_picturer.url %} {{ request.user.profile.profile_picturer.url }} {% else %}{% static 'backend/assets/images/users/no-picture.png' %}{% endif %}" alt="user-image" height="42"
+                    class="rounded-circle shadow-sm">
+                <span class="leftbar-user-name">
+                    {% if request.user.role == 'CHAIRMAN' %}
+                        Chairman
+                    {% elif request.user.role == 'MD' %}
+                        MD
+                    {% elif request.user.role == 'CUSTOMER' %}
+                        Customer
+                    {% elif request.user.role == 'AGENT' %}
+                        Field Agent
+                    {% elif request.user.role == 'DAHR' %}
+                        Director Admin &amp; HR
+                    {% elif request.user.role == 'DT' %}
+                        Director Technical
+                    {% else %}
+                    {% endif %}
+                </span>
+            </a>
+        </div>
+
+        <ul class="side-nav">
+            <li class="side-nav-title side-nav-item">Navigation</li>
+
+            <li class="side-nav-item">
+                <a href="{% url 'accounts:dashboard' %}" class="side-nav-link">
+                    <i class="uil-home-alt"></i>
+                    <span> Dashboard </span>
+                </a>
+            </li>
+
+            <!--
+            <li class="side-nav-item">
+                <a href="{# #url 'invoices:invoice_pdf' #}#" class="side-nav-link">
+                    <i class="uil-home-alt"></i>
+                    <span> Export PDF </span>
+                </a>
+            </li>
+            -->            
+
+            <li class="side-nav-title side-nav-item">Apps</li>
+
+            {% if request.user.role == 'DAHR' or request.user.role == 'MD' or request.user.role == 'CHAIRMAN' %}
+            <li class="side-nav-item">
+                <a href="{% url 'accounts:users' %}" class="side-nav-link">
+                    <i class="ri-group-line"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+            <li class="side-nav-item">
+                <a href="{% url 'accounts:agro-dealers' %}" class="side-nav-link">
+                    <i class="mdi mdi-account-check"></i>
+                    <span>Agro Dealers (KYCed)</span>
+                </a>
+            </li>
+            {% endif %}
+
+
+
+            {% if request.user.role == 'AGENT' or request.user.role == 'DT' or request.user.role == 'MD' or request.user.role == 'CHAIRMAN' %}
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarProducts" aria-expanded="false" aria-controls="sidebarProducts"
+                        class="side-nav-link">
+                        <i class="ri-stock-fill"></i>
+                        <span> Products </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarProducts">
+                        <ul class="side-nav-second-level">
+                            {% if request.user.role == 'AGENT' %}
+                                <li><a href="{% url 'products:market-agent-product-create' %}">Add Product</a></li>
+                                <li><a href="{% url 'products:market-agent-products-list' %}">Products List</a></li>
+                            {% endif %}
+
+                            {% if request.user.role == 'DT' or request.user.role == 'MD' or request.user.role == 'CHAIRMAN' %}
+                                <li><a href="{% url 'products:market-agent-products-all' %}">Market Agents Products</a></li>
+                            {% endif %}
+                            
+                            {% if request.user.role == 'DT' %}
+                                <li><a href="{% url 'products:product-create' %}">Add Product</a></li>
+                            {% endif %}
+                            {% if request.user.role == 'DT' or request.user.role == 'MD' or request.user.role == 'CHAIRMAN' %}
+                                <li><a href="{% url 'products:products-list-all' %}">Products List</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </li>
+            {% endif %}
+
+            {% if request.user.role == 'DT' or request.user.role == 'MD' or request.user.role == 'CHAIRMAN' %}
+                <li class="side-nav-item">
+                    <a href="{% url 'orders:orders-list' %}" class="side-nav-link">
+                        <i class="mdi mdi-basket"></i>
+                        <span>Orders</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if request.user.role == 'CUSTOMER' %}
+                <li class="side-nav-item">
+                    <a href="{% url 'orders:my-orders' %}" class="side-nav-link">
+                        <i class="mdi mdi-basket"></i>
+                        <span>My Orders </span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if request.user.role == 'MD' or request.user.role == 'CHAIRMAN' or request.user.role == 'DT' %}
+                <li class="side-nav-item">
+                    <a href="{% url 'contacts:contact-messages' %}" class="side-nav-link">
+                        <i class="ri-message-2-line"></i>
+                        <span> Contact Messages </span>
+                    </a>
+                </li>
+            {% endif %}
+            
+            {% if request.user.role == 'MD' or request.user.role == 'CHAIRMAN' or request.user.role == 'DT' %}
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarProjects" aria-expanded="false"
+                        aria-controls="sidebarProjects" class="side-nav-link">
+                        <i class=" ri-article-line"></i>
+                        <span>Activities </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarProjects">
+                        <ul class="side-nav-second-level">
+                            <li><a href="{% url 'blog:all-activities' %}">Activity List</a></li>
+                            {% if request.user.role == 'DT' %}
+                            <li><a href="{% url 'blog:activity-create' %}">New Activity</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </li>
+            {% endif %}
+
+            {% if request.user.role == 'MD' or request.user.role == 'CHAIRMAN' %}
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarFAQs" aria-expanded="false" aria-controls="sidebarFAQs"
+                        class="side-nav-link">
+                        <i class="uil-question-circle"></i>
+                        <span> FAQs </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarFAQs">
+                        <ul class="side-nav-second-level">
+                             {% if request.user.role == 'DT' %}
+                            <li><a href="{% url 'faqs:faqs-create' %}">Create FAQ</a></li>
+                             {% endif %}
+                            <li><a href="{% url 'faqs:faqs-all' %}">All FAQs</a></li>
+                        </ul>
+                    </div>
+                </li>
+            {% endif %}
+
+
+            {% if request.user.role == 'DMP' or request.user.role == 'MD' or request.user.role == 'CHAIRMAN' %}
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarProcurementRequests" aria-expanded="false" aria-controls="sidebarInventories"
+                        class="side-nav-link">
+                        <i class="ri-message-2-line"></i>
+                        <span>Procurements </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarProcurementRequests">
+                        <ul class="side-nav-second-level">
+                            <li><a href="{% url 'procurements:procurement-requests' %}">Procurement Requests</a></li>
+                             {% if request.user.role == 'DMP' %}
+                                <li><a href="{% url 'procurements:procurement-request-create' %}">Procurement Request Form</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </li>
+            {% endif %}
+
+
+            <!--
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarInventories" aria-expanded="false" aria-controls="sidebarInventories"
+                        class="side-nav-link">
+                        <i class="uil-store-alt"></i>
+                        <span>Inentories </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarInventories">
+                        <ul class="side-nav-second-level">
+                            <li><a href="#">All Items</a></li>
+                            <li><a href="#">New Item</a></li>
+                        </ul>
+                    </div>
+                </li>
+            -->
+
+            {% if request.user.role == 'DT' %}
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false"
+                        aria-controls="sidebarMultiLevel" class="side-nav-link">
+                        <i class="ri-truck-line"></i>
+                        <span> Logistics &amp; Delivary</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarMultiLevel">
+                        <ul class="side-nav-second-level">
+                            <li class="side-nav-item">
+                                <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false"
+                                    aria-controls="sidebarSecondLevel">
+                                    <span>Logistics </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarSecondLevel">
+                                    <ul class="side-nav-third-level">
+                                        <li>
+                                            <a href="{% url 'logistics:fleet-management' %}">Fleet Management</a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'logistics:driver-management' %}">Driver Management</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="side-nav-item">
+                                <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false" aria-controls="sidebarThirdLevel">
+                                    <span>Delivary Management</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarThirdLevel">
+                                    <ul class="side-nav-third-level">
+                                        <li>
+                                            <a href="#">Delivaries</a>
+                                        </li>
+                                        <!---
+                                        <li>
+                                            <a href="javascript: void(0);">Dummy</a>
+                                        </li>
+                                        -->
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            {% endif %}
+
+            {% if request.user.role == 'MD' %}
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarNewsletter" aria-expanded="false" aria-controls="sidebarNewsletter"
+                    class="side-nav-link">
+                    <i class="uil-envelope"></i>
+                    <span>Newsletter </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarNewsletter">
+                    <ul class="side-nav-second-level">
+                        <li><a href="{% url 'newsletters:email_list' %}">Email List</a></li>
+                        <li><a href="{% url 'newsletters:mail_message_form' %}">New Message</a></li>
+                        <li><a href="{% url 'newsletters:mail_messages_list' %}">Sent Messages</a></li>
+                    </ul>
+                </div>
+            </li>
+            {% endif %}
+        
+
+            <li class="side-nav-title side-nav-item">Settings</li>
+
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarForms" aria-expanded="false" aria-controls="sidebarForms"
+                    class="side-nav-link">
+                    <i class="ri-settings-5-line"></i>
+                    <span> Settings </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarForms">
+                    <ul class="side-nav-second-level">
+                        <li><a href="{% url 'accounts:profile' %}">Profile</a></li>
+                        {% if request.user.role == 'CUSTOMER' %}
+                            <li><a href="{% url 'addresses:address-list' %}">Delivery Addresses</a></li>
+                            {% if not request.user.companyinformation %}
+                                <li><a href="{% url 'accounts:customer-kyc-form' %}">Customer KYC Form</a></li>
+                            {% else %}
+                            <li><a href="#{# url 'accounts:customer-kyc-form' #}">Company Information</a></li>
+                            {% endif %}
+                        {% endif %}
+                        <li><a href="{% url 'password_change' %}">Password Change</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="{% url 'logout' %}" target="_blank" class="side-nav-link">
+                    <i class="ri-logout-box-line"></i>
+                    <span> Log out </span>
+                </a>
+            </li>
+            
+        <div class="clearfix"></div>
+    </div>
+</div>
+{% endif %}

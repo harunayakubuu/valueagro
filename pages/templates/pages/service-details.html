@@ -1,0 +1,45 @@
+{% extends "front-base.html" %}
+{% load static %}
+{% block head_title %}T &amp; C{% endblock head_title %}
+
+{% block content %}
+
+    <div class="ltn__breadcrumb-area ltn__breadcrumb-area-1 ltn__breadcrumb-color-white bg-overlay-theme-black-60 bg-image" data-bg="{% static 'frontend/img/bg/02.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
+                        <div class="section-title-area ltn__section-title-2">
+                            <h1 class="white-color">Service Details</h1>
+                        </div>
+                        <div class="ltn__breadcrumb-list">
+                            <ul>
+                                <li><a href="{% url 'pages:index' %}">Home</a></li>
+                                <li><a href="{% url 'pages:services' %}">Service</a></li>
+                                <li>{{ service.title }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <div class="ltn__page-details-area ltn__service-details-area mb-105">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="ltn__page-details-inner ltn__service-details-inner">
+                        <div class="ltn__blog-img">
+                            <img src="{{ service.picture.url }}" alt="Image">
+                        </div>
+                        <h2>{{ service.title }}</p>
+                        <p>
+                            {{ service.description|safe|linebreaks }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,60 @@
+{% extends "back-base.html" %}
+
+{% load static %}
+{% block head_title %}Contact Messages{% endblock head_title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Contact Messages</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Contact Messages</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
+                        <thead>
+                            <tr>
+                                <th>SN.</th>
+                                <th>Name</th>
+                                <th>Phone number</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Date recieved</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for message in contact_messages %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="{{ message.get_message_details }}">{{ message.name }}</a></td>
+                                <td>{{ message.phone }}</td>
+                                <td>{{ message.email }}</td>
+                                <td>
+                                    <span {% if message.status == "attended" %} class="badge bg-success me-1"  {% elif message.status == 'pending' %} class="badge bg-warning me-1" {% elif message.status == 'ignored' %} class="badge bg-danger me-1" {% endif %}>
+                                        {{ message.status|title }}
+                                    </span>
+                                </td>
+                                <td>{{ message.created_at | date }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+                                            

@@ -1,0 +1,138 @@
+{% extends "front-base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block head_title %}Order Summary {% endblock head_title %}
+
+{% block content %}
+    <div class="section-full content-inner">
+        <div class="container">
+            
+            <div class="p-a30 bg-white m-b30">
+                <div class="section-head">
+                    <h2 class="text-uppercase">Products Selected <a href="{% url 'products:public-products' %}" class="site-button outline blue m-r5 btn-sm"> Add More Products</a></h2>
+                    <span style="font-size:20px;">Manage <strong>items</strong> selected</span>
+                </div>
+                
+                <div class="section-content">
+                    
+                    <div class="row">
+                        <div class="post card-container">
+                            <div class="widget recent-posts-entry">
+                                <div class="widget-post-bx">
+                                    {% for item in truck %}
+                                    {% with product=item.product %}
+                                    <div data-index="{{ product.id }}" class="product-item">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td rowspan="2">
+                                                    <img src="{% if product.main_picture.url %} {{ product.main_picture.url }} {% else %} {% static 'frontend/images/product/pic1.jpg' %} {% endif %}" hight="50px" width="50px" alt="">
+                                                </td>
+                                                <td colspan="2">{{ product.product_name }}</td>
+                                                
+                                                <td style="text-align:right"><strong>&#8358;{{ product.price }}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <select id="select{{ product.id }}" class="form-control">
+                                                        <option selected>{{ item.qty }}</option>
+                                                        <option class="form-control" value="1">1</option>
+                                                        <option class="form-control" value="2">2</option>
+                                                        <option class="form-control" value="3">3</option>
+                                                        <option class="form-control" value="4">4</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" placeholder="Delivery Address" value="{{ item.address }}" id="delivery-address"> 
+                                                </td>
+                                                <td> 
+                                                    <button type="button" class="site-button outline blue m-r15 update-button btn-sm" id="update-button" data-index="{{ product.id }}">Update</button>
+                                                    <button type="button" class="site-button red  m-r5 delete-button btn-sm" id="delete-button" data-index="{{ product.id }}"><i class="fa fa-trash"></i><span class="site-button-inr"> Remove</span></button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    {% endwith %}
+                                    {% empty %}
+                                        No products selected
+                                    {% endfor %}
+                                </div>
+                                {% if truck %}
+                                <div class="text-end">
+                                    <span class"pull-right" style="font-size:20px"><strong>Sub Total: &#8358;<div id="subtotal" class="d-inline-flex">{{ truck.get_total_price }}</div></strong><span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% if truck %}
+                                <div class="text-end">
+                                    <p>
+                                        <strong>Note:</strong> The <u>Sub total</u> above is the amount payable for the product(s) selected.<br />
+                                        Delivery fees shall be computed hence the <strong>total amount</strong> payable.
+                                    </p>
+                                    <p>
+                                        <div class="alert alert-warning"> <strong>Note</strong> also that delivery to multiple locations attracts higher charges.</div>
+                                    </p>
+                                    
+                                        <span class"pull-right"><a href="{% url 'orders:place-order' %}" class="site-button blue">Proceed to place your order</a><span>
+                                    
+                                </div>
+                            {% endif %}
+                        </div>                            
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+
+    <script>
+        // Delete Item
+        $(document).on('click', '.delete-button', function (e){
+            e.preventDefault();
+            var prodid = $(this).data('index');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "trucks:truck-delete" %}',
+                data: {
+                    productid: $(this).data('index'),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+                success: function (json) {
+                    $('.product-item[data-index="'+ prodid +'"]').remove();
+                    document.getElementById("subtotal").innerHTML = json.subtotal
+                    document.getElementById("truck-qty").innerHTML = json.qty
+                },
+                error: function (xhr, errmsg, err) {
+
+                },
+            });
+        })
+
+        //Update Item
+        $(document).on('click', '.update-button', function (e){
+            e.preventDefault();
+            var prodid = $(this).data('index');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "trucks:truck-update" %}',
+                data: {
+                    productid: $(this).data('index'),
+                    productqty: $('#select'+ prodid +' option:selected').text(),
+                    deliveryaddr: $('#delivery-address').text(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+                success: function (json) {
+                    document.getElementById("truck-qty").innerHTML = json.qty
+                    document.getElementById("delivery-address").innerHTML = json.addr
+                    document.getElementById("subtotal").innerHTML = json.subtotal
+                },
+                error: function (xhr, errmsg, err) {
+
+                },
+            });
+        })
+    </script>
+{% endblock content %}

@@ -1,0 +1,51 @@
+{% extends 'back-base.html' %}
+{% load static %}
+
+{% block head_title %}Procurement Request Delete{% endblock head_title %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'procurements:procurement-requests' %}">Contact Messages</a></li>
+                        <li class="breadcrumb-item active">Procurement Request Delete</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Procurement Request Delete</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            {% include 'includes/alerts.html' %}
+            <div class="card">
+                <div class="card-body">
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.role == 'DMP' %}
+                        
+                            <h3>Procurement Request Delete</h3>
+                            <form method="post">{% csrf_token %}
+                                <p>Are you sure you want to delete the procurement request <strong>{{ object.title }}</strong>?</p>
+                                
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <a href="{% url 'procurements:procurement-requests' %}" class="btn btn-success">Cancel</a>
+                            </form>
+                        {% else %}
+                            You do not have permission to perform this task.
+                        {% endif %}
+                       
+                    {% else %}
+                        <p style="font-size: medium;">
+                            You are not logged in. Would you like to <a href="{% url 'accounts:account-login' %}">login</a>?
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

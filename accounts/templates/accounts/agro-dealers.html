@@ -1,0 +1,63 @@
+{% extends "back-base.html" %}
+{% load static %}
+
+{% block head_title %}Agro Dealers{% endblock head_title %}
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Agro Dealers</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Agro Dealers</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        {# if request.user.role == 'DAHR' or request.user.role == 'MD' or request.user.role == 'CHAIRMAN' #}
+        <div class="card">
+            {% include 'includes/alerts.html' %}
+            <div class="card-body">
+                <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
+                <thead>
+                    <tr>
+                        <th>SN.</th>
+                        <th>Full name</th>
+                        <th>Email</th>
+                        <th>Company</th>
+                        <th>Phone</th>
+                        <th>State</th>
+                        <th>LGA</th>
+                        <th>Town</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dealer in agro_dealers %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{% url 'accounts:agro-dealer-details' dealer.id %}">{% if dealer.user.get_full_name %}{{ dealer.user.get_full_name }}{% else %}{{ dealer.user.username }}{% endif %}</a></td>
+                        <td>{{ dealer.user.email }}</td>
+                        <td>{{ dealer.user.companyinformation.company_name }}</td>
+                        <td>{{ dealer.user.companyinformation.phone }}</td>
+                        <td>{{ dealer.user.companyinformation.state }}</td>
+                        <td>{{ dealer.user.companyinformation.lga }}</td>
+                        <td>{{ dealer.user.companyinformation.town_city }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+            </div>
+        </div>
+        {# else #}
+            <!--<p>You do not have access to this page.</p>-->
+        {# endif #}
+    </div>
+
+{% endblock content %}

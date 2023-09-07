@@ -1,0 +1,68 @@
+
+{% extends 'back-base.html' %}
+{% load static %}
+
+{% block head_title %}Activity List{% endblock head_title %}
+
+{% block content %}
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <!-- <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li> -->
+                        <li class="breadcrumb-item active">Activity List</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Activity List
+                {% if request.user.role == 'DT' or request.user.role == 'MD' %}
+                    <a href="{% url 'blog:activity-create' %}" class="btn btn-success btn-sm ms-3">Add New Activity</a></h4>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% include 'includes/alerts.html' %}
+
+    {% if request.user.role == 'MD' or request.user.role == 'CHAIRMAN' or request.user.role == 'DT' %}
+        {% if activities %}
+            <table class="table table-centered mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>S/N</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Content</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for activity in activities %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ activity.title }}</td>
+                        <td>{{ activity.category.title }}</td>
+                        <td>{{ activity.content }}</td>
+                        <td>{% if activity.active %}Active {% else %} Not Active {% endif %}</td>
+                        <td>
+                            {% if request.user.role == 'DT' or request.user.role == 'MD' %}
+                                <a href="{% url 'blog:activity-update' activity.id %}">Edit</a> | <a href="{% url 'blog:activity-delete' activity.id %}">Delete</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        {% else %}
+            <p>No activities available.</p>
+        {% endif %}
+    {% else %}
+        <p>You currently do not have access to this page. Please </p>
+    {% endif %}
+
+{% endblock content %}

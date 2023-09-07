@@ -1,0 +1,62 @@
+{% extends "back-base.html" %}
+
+{% load static %}
+{% block head_title %}Email List{% endblock head_title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Email List</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Email List</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
+                        <thead>
+                            <tr>
+                                <th>SN.</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Date Subscribed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for email in email_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ email.email }}</td>
+                                <td>
+                                    {% if email.subscribed %}
+                                    <span  class="badge bg-success me-1">
+                                        Subscribed
+                                    </span>
+                                    {% else %}
+                                    <span class="badge bg-danger me-1">
+                                        Unsubscribed
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ email.created_at | date }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+                                            

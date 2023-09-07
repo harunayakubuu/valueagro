@@ -1,0 +1,64 @@
+{% extends "back-base.html" %}
+{% load static %}
+{% block head_title %}Agent Products List{% endblock head_title %}
+
+
+{% block content %}
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">{{ request.user }}' Products List</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">
+                {{ request.user }}' Products List
+                <a href="{% url 'products:market-agent-product-create' %}" class="btn btn-success btn-sm"><i class="mdi mdi-plus"></i>Add Product</a>
+                </h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                {% include 'includes/alerts.html' %}
+                <div class="card-body">
+                    <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
+                        <thead>
+                            <tr>
+                                <th>SN.</th>
+                                <th>Product</th>
+                                <th>Market</th>
+                                <th>Product Quality</th>
+                                <th>Price</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in agent_products %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="{% url 'products:market-agent-product-details' product.id %}">{{ product.product_name }}</a></td>
+                                <td>{{ product.market_name }}</td>
+                                <td>{{ product.product_quality }}</td>
+                                <td>
+                                    &#8358;{{ product.price }}/{{ product.price_unit }}
+                                </td>
+                                <td>{{ product.created_at | date }}</td>
+                                <td><a href="{% url 'products:market-agent-product-edit' product.id %}">Edit</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+                                            

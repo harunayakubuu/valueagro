@@ -1,0 +1,216 @@
+{% extends "back-base.html" %}
+{% load static %}
+
+{% block head_title %}{{ dealer.company_name | title }}{% endblock head_title %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Hyper</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:agro-dealers' %}">Agro Dealers</a></li>
+                        <li class="breadcrumb-item active">{{ dealer.company_name }}</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">{{ dealer.company_name }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Company Information 
+                        (
+                        {% if dealer.user.get_full_name %}
+                            {{ dealer.user.get_full_name.title }}
+                        {% else %}
+                            {{ dealer.user.username.title }}
+                        {% endif %}
+                        )
+                    </h3>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-7 col-md-8 col-sm-12">
+                            <table width="80%" class="table table-sm table-centered mb-0">
+                                <tr>
+                                    <td><strong>Company name</strong></td>
+                                    <td>{{ dealer.company_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Address</strong></td>
+                                    <td>{{ dealer.address }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>State</strong></td>
+                                    <td>{{ dealer.state }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>LGA</strong></td>
+                                    <td>{{ dealer.lga }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Town/City</strong></td>
+                                    <td>{{ dealer.town_city }}</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><strong>Phone</strong></td>
+                                    <td>{{ dealer.phone }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Email</strong></td>
+                                    <td>{{ dealer.email }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Website</strong></td>
+                                    <td>{{ dealer.website }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Company Type</strong></td>
+                                    <td>{{ dealer.company_type }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Business Type</strong></td>
+                                    <td>{{ dealer.nature_of_business }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Company Registration Number</strong></td>
+                                    <td>{{ dealer.company_registration_number }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tax Registration Number</strong></td>
+                                    <td>{{ dealer.tax_registration_number }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>FSS Registration Number</strong></td>
+                                    <td>{{ dealer.fss_registration_number }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-lg-5 col-md-4 col-sm-12">
+                            {% if shop.picture %}
+                                <img src="shop.picture.url" alt="Document">
+                            {% endif %}
+                        </div>
+                    </div>                   
+
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div> <!-- end col -->
+    </div>
+
+    {% if dealer.warehouseinformation_set.all %}
+        {% for warehouse in dealer.warehouseinformation_set.all %}
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Warehouse Information</h3>
+                            <hr>
+                            <div class="row">
+                                <div class="col-lg-7 col-md-8 col-sm-12">
+                                    <table class="table table-sm table-centered mb-0" width="50%">
+                                        <tr>
+                                            <td><strong>Shop address</strong></td>
+                                            <td>{{ warehouse.address }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>State</strong></td>
+                                            <td>{{ warehouse.state }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>LGA</strong></td>
+                                            <td>{{ warehouse.lga }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Town/City</strong></td>
+                                            <td>{{ warehouse.town_city }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Shopkeeper</strong></td>
+                                            <td>{{ warehouse.warehouse_manager }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Phone</strong></td>
+                                            <td>{{ warehouse.manager_phone }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Email</strong></td>
+                                            <td>{{ warehouse.manager_email }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-lg-5 col-md-4 col-sm-12">
+                                    {% if warehouse.picture %}
+                                        <img src="warehouse.picture.url" alt="Warehouse Manager">
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if dealer.shopinformation_set.all %}
+        {% for shop in dealer.shopinformation_set.all %}
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Shop Information</h3>
+                            <hr>
+                            <div class="row">
+                                <div class="col-lg-7 col-md-8 col-sm-12">
+                                    <table class="table table-sm table-centered mb-0" width="50%">
+                                        <tr>
+                                            <td><strong>Shop address</strong></td>
+                                            <td>{{ shop.address }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>State</strong></td>
+                                            <td>{{ shop.state }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>LGA</strong></td>
+                                            <td>{{ shop.lga }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Town/City</strong></td>
+                                            <td>{{ shop.town_city }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Shopkeeper</strong></td>
+                                            <td>{{ shop.shop_keeper }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Phone</strong></td>
+                                            <td>{{ shop.shop_keeper_phone }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Email</strong></td>
+                                            <td>{{ shop.shop_keeper_email }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-lg-5 col-md-4 col-sm-12">
+                                    {% if shop.picture %}
+                                        <img src="shop.picture.url" alt="Shop Keeper">
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% endblock content %}

@@ -1,0 +1,67 @@
+{% extends "back-base.html" %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Delivary List{% endblock head_title %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Delivary List</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Delivary List
+                    {% if request.user.is_superuser %}
+                        <a href="{% url 'accounts:admin-user-create' %}" class="btn btn-success btn-sm ms-3">Add New Delivary</a>
+                    {% endif %}                    
+                </h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="card">
+            {% include 'includes/alerts.html' %}
+            <div class="card-body">
+
+                <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
+                <thead>
+                    <tr>
+                        <th>SN.</th>
+                        <th>Order</th>
+                        <th>Vehicle</th>
+                        <th>Delivary Location</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Delivary Date</th>
+                        <th>Delivary Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{# url 'logistics:delivary-details' delivary.delivary_id #}">{# user.username #}</a></td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.get_full_name }}</td>
+                        <td>{{ user.role }}</td>
+                        <td>{% if user.is_active %}Active{% else %}Not active{% endif %}</td>
+                        <td>{{ user.date_joined | date }}</td>
+                        <td>{{ user.last_login | date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

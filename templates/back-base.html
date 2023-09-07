@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>{% block head_title %}{% endblock head_title %} | Value Agro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Value Agro Administration" name="description" />
+    <meta content="Integral Solutions" name="author" />
+
+    <link rel="shortcut icon" href="{% static 'backend/assets/images/favicon.ico' %}">
+
+    <link href="{% static 'backend/assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'backend/assets/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'backend/assets/vendor/datatables.net-fixedcolumns-bs5/css/fixedColumns.bootstrap5.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'backend/assets/vendor/datatables.net-fixedheader-bs5/css/fixedHeader.bootstrap5.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'backend/assets/vendor/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'backend/assets/vendor/datatables.net-select-bs5/css/select.bootstrap5.min.css' %}" rel="stylesheet" type="text/css" />
+    
+    <link href="{% static 'backend/vendor/simplemde/simplemde.min.css' %}" rel="stylesheet" type="text/css" />
+    
+    <link href="{% static 'backend/assets/css/app-saas.min.css' %}" rel="stylesheet" type="text/css" id="app-style" />
+    <link href="{% static 'backend/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="wrapper">
+   
+        {% include "includes/backend/topbar.html" %}
+        {% include "includes/backend/sidebar.html" %}
+
+        <div class="content-page">
+            <div class="content">
+
+                <div class="container-fluid">
+                    {% block content %}
+                    
+                    {% endblock content %}
+                </div>
+
+            </div>
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            &copy; {% now 'Y' %} Value Agro Allied.
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-md-end footer-links d-none d-md-block">
+                                Powered by <a href="#">Integral Solutions</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+
+    </div>
+
+    <script src="{% static 'backend/assets/js/hyper-config.js' %}"></script>
+
+    <script src="{% static 'backend/assets/js/vendor.min.js' %}"></script>
+    <script src="{% static 'backend/assets/js/ui/component.todo.js' %}"></script>
+    <script src="{% static 'backend/assets/js/pages/demo.crm-dashboard.js' %}"></script>
+    <script src="{% static 'backend/assets/js/app.min.js' %}"></script>
+
+    <!-- Code Highlight js -->
+    <script src="{% static 'backend/assets/js/hyper-syntax.js' %}"></script>
+    <script src="{% static 'backend/assets/js/pages/demo.profile.js' %}"></script>
+
+    <script src="{% static 'backend/js/pages/demo.inbox.js' %}"></script>
+
+    <script src="{% static 'backend/assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
+    <script src="{% static 'backend/assets/vendor/chart.js/chart.min.js' %}"></script>
+    <script src="{% static 'backend/assets/vendor/highlightjs/highlight.pack.min.js' %}"></script>
+    <script src="{% static 'backend/vendor/simplemde/simplemde.min.js' %}"></script>
+
+    <!-- Datatables js -->
+    <script src="{% static 'backend/assets/vendor/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'backend/assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js' %}"></script>
+    <script src="{% static 'backend/assets/vendor/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'backend/assets/vendor/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js' %}"></script>
+    <script src="{% static 'backend/assets/vendor/datatables.net-fixedcolumns-bs5/js/fixedColumns.bootstrap5.min.js' %}"></script>
+    <script src="{% static 'backend/assets/vendor/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js' %}"></script>
+    <script src="{% static 'backend/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'backend/assets/vendor/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js' %}"></script>
+    <script src="{% static 'backend/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'backend/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'backend/assets/vendor/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'backend/assets/vendor/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+    <script src="{% static 'backend/assets/vendor/datatables.net-select/js/dataTables.select.min.js' %}"></script>
+
+    <!-- Datatable Demo Aapp js -->
+    <script src="{% static 'backend/assets/js/pages/demo.datatable-init.js' %}"></script>
+</body>
+
+</html>

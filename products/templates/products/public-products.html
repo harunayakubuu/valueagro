@@ -1,0 +1,142 @@
+{% extends "front-base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block head_title %}{% if category %}{{ category.name }}{% else %}Products{% endif %}{% endblock head_title %}
+
+{% block meta %}
+    <meta name="description" property="og:description" content="This page lists the various products available at including price and description for each product">
+    <meta name="keywords" content="fertilizer, NPK, UREA, dry blended, wet blended, Agro-chemicals, rice, maize, millet, sorghum, beans, soyabeans">
+{% endblock meta %}
+    
+{% block content %}
+    <div class="ltn__breadcrumb-area ltn__breadcrumb-area-1 ltn__breadcrumb-color-white bg-overlay-theme-black-60 bg-image plr--9---" data-bg="{% static 'frontend/img/bg/03.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
+                        <div class="section-title-area ltn__section-title-2">
+                            <h1 class="white-color">Products</h1>
+                        </div>
+                        <div class="ltn__breadcrumb-list">
+                            <ul>
+                                <li><a href="{% url 'pages:index' %}">Home</a></li>
+                                <li>Products</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ltn__product-area ltn__product-gutter mb-120">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-4">
+                    
+                    <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar">
+                        <!-- Category Widget -->
+                        <div class="widget ltn__menu-widget">
+                            <h4 class="ltn__widget-title ltn__widget-title-border">Product categories</h4>
+                            <ul>
+                                <li {% if not category %}class=""{% endif %}><a href="{% url 'products:public-products' %}">All </a> </li>
+                                {% for c in categories %}
+                                    <li {% if category.slug == c.slug %}class="selected" {% endif %}>
+                                        <a href="{{ c.get_absolute_url }}">{{ c.name }} </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <!--<div class="widget ltn__banner-widget">
+                            <a href="{# url 'pages:index' #}"><img src="{# static 'frontend/img/banner/banner-2.jpg' #}" alt="#"></a>
+                        </div>-->
+                    </aside>
+                    
+                </div>
+
+                <div class="col-lg-8">
+                {% if products %}
+                    <div id="liton_product_grid">
+                        <div class="ltn__product-grid-view">
+                            <div class="row">                    
+                                {% for product in products %}
+                                    <div class="col-xl-4 col-md-6 col-sm-12">
+                                        <div class="ltn__product-item ltn__product-item-3 text-center">
+                                            <div class="product-img">
+                                                <a href="{{ product.get_absolute_url }}"><img src="{% if product.main_picture.url %} {{ product.main_picture.url }} {% else %} {% static 'frontend/img/product/1.png' %} {% endif %}" alt="#"></a>
+                                                <!--
+                                                <div class="product-badge">
+                                                    <ul>
+                                                        <li class="sale-badge">New</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="product-hover-action">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#" title="Quick View" data-toggle="modal" data-target="#quick_view_modal">
+                                                                <i class="far fa-eye"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" title="Add to Cart" data-toggle="modal" data-target="#add_to_cart_modal">
+                                                                <i class="fas fa-shopping-cart"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" title="Wishlist" data-toggle="modal" data-target="#liton_wishlist_modal">
+                                                                <i class="far fa-heart"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>-->
+                                            </div>
+                                            <div class="product-info">
+                                                <!--<div class="product-ratting">
+                                                    <ul>
+                                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
+                                                        <li><a href="#"><i class="far fa-star"></i></a></li>
+                                                    </ul>
+                                                </div>-->
+                                                <h2 class="product-title"><a href="{{ product.get_absolute_url }}">{{ product.product_name }}</a></h2>
+                                                <div class="product-price">
+                                                    <span>&#8358;{{ product.price | intcomma }}/{{ product.price_unit }}</span>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                            
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!--
+                        <div class="ltn__pagination-area text-center">
+                            <div class="ltn__pagination">
+                                <ul>
+                                    <li><a href="#"><i class="fas fa-angle-double-left"></i></a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li class="active"><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">...</a></li>
+                                    <li><a href="#">10</a></li>
+                                    <li><a href="#"><i class="fas fa-angle-double-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        -->
+                    {% else %}
+                        No products available, check again.
+                    {% endif %}
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+{% endblock content %}

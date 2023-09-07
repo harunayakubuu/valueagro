@@ -1,0 +1,90 @@
+{% extends "back-base.html" %}
+{% load static %}
+{% block head_title %}Dashboard{% endblock head_title %}
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Dashboard</h4>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    {% if request.user.role == 'CHAIRMAN' or request.user.role == 'MD' %}
+        <div class="row">
+            <div class="col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h5 class="text-muted fw-normal mt-0" title="Total Customers">Customers</h5>
+                                <h3 class="my-2 py-1">{{ total_customers.count }}</h3>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <h5 class="text-muted fw-normal mt-0 text-truncate" title="Market Agents">Market Agents</h5>
+                                <h3 class="my-2 py-1"> {{ total_agents.count }}</h3>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h5 class="text-muted fw-normal mt-0" title="Orders Delivered">Active Orders</h5>
+                                <h3 class="my-2 py-1">{{ orders.count }}</h3>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h5 class="text-muted fw-normal mt-0" title="Dummy">Dummy</h5>
+                                <h3 class="my-2 py-1">0</h3>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+             
+        </div>
+    {% endif %}
+
+    
+{% endblock content %}
+
+

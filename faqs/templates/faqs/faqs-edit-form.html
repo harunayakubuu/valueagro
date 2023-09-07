@@ -1,0 +1,60 @@
+{% extends 'back-base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Edit Address{% endblock head_title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'addresses:my-addresses' %}">Address</a></li>
+                        <li class="breadcrumb-item active">Edit Addresss</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Edit Address</h4>
+            </div>
+        </div>
+    </div>
+
+    {% if request.user.role == 'DT' %}
+        <div class="row">
+            <div class="col-12">
+                
+                <div class="card align-items-center">
+                    <div class="card-body">
+                        {% include 'includes/alerts.html' %}
+                        <h3>Address Edit Form</h3>
+
+                        <form method="post" enctype="multipart/form-data" novalidate>{% csrf_token %}
+                            <div class="row">
+                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 mb-3">
+                                    {{ form.address|as_crispy_field }}
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 mb-3">
+                                    {{ form.city|as_crispy_field }}
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 mb-3">
+                                    {{ form.state|as_crispy_field }}
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 mb-3">
+                                    {{ form.status|as_crispy_field }}
+                                </div>               
+                            </div>
+                            <div class="row">
+                                <div class="mb-3">
+                                <input type="submit" value="Save Changes" class="btn btn-success">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>You currently do not have access to this page.</p>
+    {% endif %}
+{% endblock content %}

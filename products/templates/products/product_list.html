@@ -1,0 +1,73 @@
+{% extends "back-base.html" %}
+
+{% load static %}
+{% block head_title %}Products List{% endblock head_title %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Products List</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">
+                    Products List
+                    {% if request.user.role == 'DT' %}
+                        <a href="{% url 'products:product-create' %}" class="btn btn-success btn-sm"><i class="mdi mdi-plus"></i>Add Product</a>
+                    {% endif %}
+                </h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                {% include 'includes/alerts.html' %}
+                <div class="card-body">
+                    <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
+                        <thead>
+                            <tr>
+                                <th>SN.</th>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Price Quality</th>
+                                <th>Picture</th>
+                                <th>Status</th>
+                                <th>Date Created</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in products %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="{% url 'products:product-details-admin' product.id %}">{{ product.product_name }}</a></td>
+                                <td>{{ product.category }}</td>
+                                <td>{{ product.price }}</td>
+                                <td>{{ product.price }}</td>
+                                <td>{{ product.status }}</td>
+                                <td>{{ product.created_at | date }}</td>
+                                <td>
+                                    {% if request.user.role == 'DT' %}
+                                        <a href="{% url 'products:product-update' product.pk %}">Edit</a>
+                                    {% else %}
+                                        Action
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+                                            

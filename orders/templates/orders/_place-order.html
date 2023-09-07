@@ -1,0 +1,130 @@
+{% extends "front-base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block head_title %}Place Order{% endblock head_title %}
+
+{% block content %}
+    <div class="section-full content-inner">
+        <div class="container">
+            
+            <div class="p-a30 bg-white m-b30">
+                <div class="section-head">
+                    <h2 class="text-uppercase">Products Selected</h2>
+                </div>
+                
+                <div class="section-content">
+                    
+                    <div class="row">
+                        <div class="post card-container">
+                            <div class="widget recent-posts-entry">
+                                <div class="widget-post-bx">
+                                    {% for item in truck %}
+                                    {% with product=item.product %}
+                                    <div data-index="{{ product.id }}" class="product-item">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td rowspan="2">
+                                                    <img src="{% if product.main_picture.url %} {{ product.main_picture.url }} {% else %} {% static 'frontend/images/product/pic1.jpg' %} {% endif %}" hight="50px" width="50px" alt="">
+                                                </td>
+                                                <td colspan="2">Product: {{ product.product_name }}</td>
+                                                
+                                                <td style="text-align:right"><strong>&#8358;{{ product.price }}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>QTY: {{ item.qty }}</div>
+                                                </td>
+                                                <td>
+                                                    <div>Address: {{ item.address }} </div> 
+                                                </td>
+                                                <td> 
+                                                    
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    {% endwith %}
+                                    {% empty %}
+                                        No products selected
+                                    {% endfor %}
+                                </div>
+                                {% if truck %}
+                                <div class="text-end">
+                                    <span class"pull-right" style="font-size:20px"><strong>Sub Total: &#8358;<div id="subtotal" class="d-inline-flex">{{ truck.get_total_price }}</div></strong><span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% if truck %}
+                                <div class="text-end">
+                                    <p>
+                                        <strong>Note:</strong> The <u>Sub total</u> above is the amount payable for the product(s) selected.<br />
+                                        Delivery fees shall be computed hence the <strong>total amount</strong> payable.
+                                    </p>
+                                    <p>
+                                        <div class="alert alert-warning"> <strong>Note</strong> also that delivery to multiple locations attracts higher charges.</div>
+                                    </p>
+                                    <a href="{% url 'orders:order-add' %}" class="site-button" id="order-add">Place Order</a>
+                                    
+                                </div>
+                            {% endif %}
+                        </div>                            
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-a30 bg-white m-b30">
+                <div class="section-head">
+                    <h2 class="text-uppercase">Summary</h2>
+                </div>
+                
+                <div class="section-content">
+                    <div class="row">
+                        <div class="col-lg-7 col-md-12 col-sm-6">
+                            <div class="icon-bx-wraper bx-style-1 p-a30 m-b15">
+                                <h5 class="dez-tilte text-uppercase">Delivery Addresse</h5>
+                                Test
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-5 col-md-12 col-sm-6 m-b30">
+                            <div class="icon-bx-wraper bx-style-1 p-a30 m-b15">
+                                <h5 class="dez-tilte text-uppercase">Total</h5>
+                                Test  
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        //Place Order
+        $(document).on('click', '#order-add', function (ev){
+            ev.preventDefault();
+            var prodid = $(this).data('index');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "orders:order-add" %}',
+                data: {
+                    productid: $(this).data('index'),
+                    productqty: $('#select'+ prodid +' option:selected').text(),
+                    deliveryaddr: $('#delivery-address').value(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+                
+                success: function (json) {
+                    document.getElementById("truck-qty").innerHTML = json.qty
+                    document.getElementById("subtotal").innerHTML = json.subtotal
+                    window.location.replace('{% url "orders:order-placed" %}')
+                },
+                error: function (xhr, errmsg, err) {
+
+                },
+            });
+        })
+    </script>
+{% endblock content %}

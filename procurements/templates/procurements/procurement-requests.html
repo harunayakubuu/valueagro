@@ -1,0 +1,162 @@
+{% extends "back-base.html" %}
+{% load static %}
+{% block head_title %}Procurement Requests{% endblock head_title %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Procurement Requests</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Procurement Requests
+                    {% if request.user.role == 'DMP' %}
+                        <a href="{% url 'procurements:procurement-request-create' %}" class="btn btn-success btn-sm"><i class="mdi mdi-plus"></i>Add Product</a>
+                    {% endif %}
+                </h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            
+            {% if request.user.role == 'DMP' %}
+            
+                <div class="card">
+                    {% include 'includes/alerts.html' %}
+                    <div class="card-body">
+                        <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
+                            <thead>
+                                <th>SN.</th>
+                                <th>Request Title</th>
+                                <th>Date Submitted</th>
+                                <th>Description</th>
+                                <th>MD Approval</th>
+                                <th>MD Comment</th>
+                                <th>Chairman Approval</th>
+                                <th>Chairman Comment</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                {% for pr in procurement_requests %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ pr.title }}</td>
+                                    <td>{{ pr.created_date|date }}</td>
+                                    <td>{{ pr.procurement_request_description }}</td>
+                                    <td>
+                                        <span {% if pr.md_approval_status == "Pending" %} class="badge bg-warning me-1" {% elif message.md_approval_status == 'Approved' %} class="badge bg-success me-1" {% elif pr.md_approval_status == 'Declined' %} class="badge bg-danger me-1" {% endif %}>
+                                            {{ pr.md_approval_status|title }}
+                                        </span>
+                                    </td>
+                                    <td>{{ pr.md_comment|truncatewords:10 }}</td>
+                                    <td>
+                                        <span {% if pr.chairman_approval_status == "Pending" %} class="badge bg-warning me-1" {% elif message.md_approval_status == 'Approved' %} class="badge bg-success me-1" {% elif pr.md_approval_status == 'Declined' %} class="badge bg-danger me-1" {% endif %}>
+                                            {{ pr.chairman_approval_status|title }}
+                                        </span>
+                                    </td>
+                                    <td>{{ pr.chairman_comment|truncatewords:10 }}</td>
+                                    <td>
+                                        <a href="{% url 'procurements:procurement-request-details' pr.id %}" class="btn btn-sm btn-success"><i class="ri-eye-fill"></i> Details</a>
+                                        
+                                        {% if request.user.role == 'DMP' %}
+                                            {% if procurement_request.chairman_approval_status == 'Pending' and procurement_request.md_approval_status == "Pending" %}
+                                                <a href="{% url 'procurements:procurement-request-delete' pr.id %}" class="btn btn-sm btn-danger"><i class="ri-delete-bin-2-line"></i> Delete</a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            {% elif request.user.role == 'MD' %}
+            
+                <div class="card">
+                    {% include 'includes/alerts.html' %}
+                    <div class="card-body">
+                        <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
+                            <thead>
+                                <th>SN.</th>
+                                <th>Request Title</th>
+                                <th>Date Submitted</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                {% for pr in procurement_requests %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ pr.title }}</td>
+                                        <td>{{ pr.created_date|date }}</td>
+                                        <td>{{ pr.procurement_request_description }}</td>                                
+                                        <td>
+                                            <a href="{% url 'procurements:procurement-request-details' pr.id %}" class="btn btn-sm btn-primary"><i class="ri-eye-fill"></i> Details</a>
+                                            <a href="" class="btn btn-sm btn-success"> Treat</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            {% elif request.user.role == 'CHAIRMAN' %}
+            
+                <div class="card">
+                    {% include 'includes/alerts.html' %}
+                    <div class="card-body">
+                        <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
+                            <thead>
+                                
+                                    <th>SN.</th>
+                                    <th>Request Title</th>
+                                    <th>Date Submitted</th>
+                                    <th>Description</th>
+                                    <th>MD Approval</th>
+                                    <th>MD Comment</th>
+                                    <th>Action</th>
+                                
+                            </thead>
+                            <tbody>
+                                {% for pr in procurement_requests %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ pr.title }}</td>
+                                    <td>{{ pr.created_date|date }}</td>
+                                    <td>{{ pr.procurement_request_description }}</td>
+                                    <td>
+                                        <span {% if pr.md_approval_status == "Pending" %} class="badge bg-warning me-1" {% elif message.md_approval_status == 'Approved' %} class="badge bg-success me-1" {% elif pr.md_approval_status == 'Declined' %} class="badge bg-danger me-1" {% endif %}>
+                                            {{ pr.md_approval_status|title }}
+                                        </span>
+                                    </td>
+                                    <td>{{ pr.md_comment|truncatewords:10 }}</td>
+                                                                    
+                                    <td>
+                                        <a href="{% url 'procurements:procurement-request-details' pr.id %}" class="btn btn-sm btn-primary"><i class="ri-eye-fill"></i> Details</a>
+                                        
+                                        <a href="#" class="btn btn-sm btn-success">Treat </a>
+                
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% else %}
+                You do not have the authorization to this page.
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock content %}
+
+                                            

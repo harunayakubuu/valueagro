@@ -1,0 +1,206 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Order Invoice</title>
+    <meta name="description" content="Order Invoice">
+	<style>
+		@font-face {
+		  font-family: Pacifico;
+		  src: url(pacifico.ttf);
+		}
+
+		@font-face {
+		  font-family: Source Sans Pro;
+		  font-weight: 400pt;
+		  src: url(sourcesanspro-regular.otf);
+		}
+
+		@font-face {
+		  font-family: Source Sans Pro;
+		  font-weight: 700;
+		  src: url(sourcesanspro-bold.otf);
+		}
+
+		
+
+		html {
+			color: #14213d;
+			font-family: Source Sans Pro;
+			font-size: 11pt;
+			line-height: 1.6;
+		}
+		
+		body {
+			margin: 20px;
+		}
+
+		h1 {
+			color: #1ee494;
+			font-family: Pacifico;
+			font-size: 40pt;
+			margin: 0px;
+		}
+
+		aside {
+			display: flex;
+			margin: 2em 0 4em;
+		}
+		
+		aside address {
+			font-style: normal;
+			white-space: pre-line;
+		}
+		
+		aside address #from {
+			color: #a9a;
+			flex: 1;
+		}
+	
+		aside address #to {
+			text-align: right;
+		}
+
+		dl {
+			position: absolute;
+			right: 0;
+			text-align: right;
+			top: 0;
+		}
+		
+		dt, dd {
+			display: inline;
+			margin: 0;
+		}
+		
+		dt {
+			color: #a9a;
+		}
+		
+		dt::before {
+			content: '';
+			display: block;
+		}
+		
+		dt::after {
+			content: ':';
+		}
+
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		
+		th {
+			border-bottom: .2mm solid #a9a;
+			color: #a9a;
+			font-size: 10pt;
+			font-weight: 400;
+			padding-bottom: .25cm;
+			text-transform: uppercase;
+		}
+		
+		td {
+			padding-top: 7mm;
+		}
+		
+		td:last-of-type {
+			color: #1ee494;
+			font-weight: bold;
+			text-align: right;
+		}
+		
+		th, td {
+			text-align: center;
+		}
+		
+		th:first-of-type, td:first-of-type {
+			text-align: left;
+		}
+		
+		th:last-of-type, td:last-of-type {
+			text-align: right;
+		}
+		
+		table #total {
+			background: #f6f6f6;
+			border-color: #f6f6f6;
+			border-style: solid;
+			border-width: 2cm 3cm;
+			bottom: 0;
+			font-size: 20pt;
+			margin: 0 -3cm;
+			position: absolute;
+			width: 18cm;
+		}
+		
+		</style>
+	</head>
+
+	<body>
+    
+		<h1>Invoice</h1>
+
+		<aside>
+			<address id="from">
+				Value Agro Synergy
+				2570 Rijiyar Zaki, <br> Dorowar Yan kifi, <br>Kano State
+				Nigeria.
+			</address>
+
+			<address id="to">
+				Our awesome developers<br>
+				From all around the world<br>
+				Earth
+			</address>
+		</aside>
+
+		<dl id="informations">
+			<dt>Invoice number:</dt>
+			<dd>{{ order.transaction_id }}</dd><br>
+			<dt>Date:</dt>
+			<dd>{{ order.created_date|date }}</dd>
+		</dl>
+
+		<table style="margin-buttom: 50px;">
+			<thead>
+				<tr>
+					<th>&#8358;Product</th>
+					<th>Price</th>
+					<th>Quantity</th>
+					<th>Subtotal</th>
+				</tr>
+			</thead>
+		
+			<tbody>
+                {% for item in items %}
+				<tr>
+					<td>{{ item.product.product_name }} </td>
+					<td>&#8358;{{ item.price }}</td>
+					<td>{{ item.quantity }} {{ item.product.price_unit }}</td>
+					<td>&#8358;{{ item.get_item_total_price }}</td>
+				</tr>
+                {% endfor %}
+			</tbody>
+		</table>
+
+        <div style="margin-top:30px">
+		<table id="total">
+			<thead>
+				<tr>
+					<th>Due by</th>
+					<th>Account number</th>
+					<th>Total due</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>May 10, 2018</td>
+					<td>132 456 789 012</td>
+					<td>&#8358;10,545.00</td>
+				</tr>
+			</tbody>
+		</table>
+        </div>
+
+	</body>
+</html>

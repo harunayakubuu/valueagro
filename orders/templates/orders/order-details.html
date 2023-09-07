@@ -1,0 +1,179 @@
+{% extends 'back-base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block head_title %}{{ order.transaction_id }}{% endblock head_title %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{% if request.user.role == 'CUSTOMER' %} {% url 'orders:my-orders' %} {% else %} {% url 'orders:orders-list' %} {% endif %}">Orders</a></li>
+                        <li class="breadcrumb-item active">Order ID: {{ order.transaction_id }}</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Order ID: #{{ order.transaction_id }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <!--
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-10 col-sm-11">
+
+            <div class="horizontal-steps mt-4 mb-4 pb-5" id="tooltip-container">
+                <div class="horizontal-steps-content">
+                    <div class="step-item">
+                        <span data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="20/08/2018 07:24 PM">Order Placed</span>
+                    </div>
+                    <div class="step-item current">
+                        <span data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="21/08/2018 11:32 AM">Packed</span>
+                    </div>
+                    <div class="step-item">
+                        <span>Shipped</span>
+                    </div>
+                    <div class="step-item">
+                        <span>Delivered</span>
+                    </div>
+                </div>
+
+                <div class="process-line" style="width: 33%;"></div>
+            </div>
+        </div>
+    </div>
+    -->
+    
+    <hr />
+
+    <div class="row justify-content-center mb-3">
+        <div class="col-lg-12 col-md-12 col-sm-11">
+            <div class="text-xl-end mt-xl-0 mt-2">
+                {% if not request.user.role == 'CUSTOMER' %}
+                    {% if not order.order_status == 'Complete' %}
+                    <a href="{% url 'orders:order-edit' order.transaction_id %}" class="btn btn-info mb-2 me-2"><i class="mdi mdi-pencil me-1"></i>Order Status</a>
+                    <a href="{% url 'orders:order-payments' order.transaction_id %}" class="btn btn-success mb-2 me-2"><i class="mdi mdi-bank me-1"></i>Payment</a>
+                    <a href="#" class="btn btn-secondary mb-2 me-2"><i class="mdi mdi-truck-outline me-1"></i>Delivary</a>
+                    {% endif %}
+                {% endif %}
+                <a href="#" class="btn btn-light mb-2">Download <i class="mdi mdi-download ms-1"></i></a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mb-3">Items from Order</h4>
+
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead class="table-light">
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in order.items.all %}
+                            <tr>
+                                <td>{{ item.product.product_name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>&#8358;{{ item.price|intcomma }}</td>
+                                <td>&#8358;{{ item.get_item_total_price|intcomma }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mb-3">Order Summary</h4>
+
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead class="table-light">
+                            <tr>
+                                <th>Description</th>
+                                <th>Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Items Total Price:</td>
+                                <td>&#8358;{{ order.amount|intcomma }}</td>
+                            </tr>
+                            <tr>
+                                <td>Delivery Charge :</td>
+                                <td>{% if order.delivery %}&#8358;{{ order.order.delivery_fee }}{% else %}No delivery {% endif %}</td>
+                            </tr>
+                            
+                            <tr>
+                                <th>Grand Total :</th>
+                                <th>&#8358;{{ order.get_grand_total|intcomma }}</th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mb-3">Delivery Information</h4>
+                    {% if request.user.profile.deliveryaddress %}
+                    <h5>State</h5>
+                    
+                    <address class="mb-0 font-14 address-lg">
+                        795 Folsom Ave, Suite 600<br>
+                        San Francisco, CA 94107<br>
+                        <abbr title="Phone">P:</abbr> (123) 456-7890, (+01) 12345 67890
+                    </address>
+                    {% else %}
+                        No delivery addresses available.
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8 col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mb-3"><i class="mdi mdi-truck-fast h2 text-muted"></i> &nbsp; Delivery Details</h4>
+                    <div class="row">
+                        <div class="col-6">
+                            <h5><b>Order Details</b></h5><hr>
+                            <p class="mb-1"><b>Order ID :</b> {{ order.transaction_id }}</p>
+                            <p class="mb-0"><b>Payment Status :</b> Paid</p>
+                        </div>
+                        <div class="col-6">
+                            <h5><b>Delivery Detail</b></h5><hr>
+                            <p class="mb-1"><b>Truck No.</b> ABC123</p>
+                            <p class="mb-0"><b>Driver:</b>{{ driver.name }} ({{ driver.phone }})</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

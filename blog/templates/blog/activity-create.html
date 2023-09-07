@@ -1,0 +1,79 @@
+{% extends 'back-base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Activity Form{% endblock head_title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                    <!--<li class="breadcrumb-item"><a href="#">Blog Post List</a></li>-->
+                    <li class="breadcrumb-item active">Activity Form</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Activity Form</h4>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        {% if request.user.role == 'DT' or request.user.role == 'MD' %}
+            <div class="card">
+                <div class="card-body">
+                        {% include 'includes/alerts.html' %}
+                        <h2>Activity Form</h2>
+                        <form enctype="multipart/form-data" method="POST" novalidate>
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        {{ form.title|as_crispy_field }}
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        {{ form.category|as_crispy_field }}
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="row">
+                                <div class="col-xl-8 col-lg-8 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        {{ form.content|as_crispy_field }}
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        {{ form.image|as_crispy_field }}
+                                    </div>
+                                </div>                              
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        {{ form.active|as_crispy_field }}
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-success mt-1" type="Save"><i class="uil uil-message me-1"></i>Save</button>
+                        </form>
+                    
+
+                </div>
+            </div>
+        {% else %}
+            <p>You currently do not have access to this page.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}

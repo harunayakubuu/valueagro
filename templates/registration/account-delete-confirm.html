@@ -1,0 +1,41 @@
+{% extends 'back-base.html' %}
+{% load static %}
+
+{% block head_title %}Confirm Account Delete{% endblock head_title %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'accounts:users' %}">Users</a></li>
+                    <li class="breadcrumb-item active">Confirm Account Delete</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Confirm Account Delete</h4>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                {% if request.user.is_authenticated %}
+                    <h3>Are you sure you want to delete this account?</h3>
+                    <p style="color:red">
+                        Deleting this your account will result to lost of all data associated to the account
+                    </p>
+                   
+                    <a href="{% url 'accounts:dashboard' %}" class="btn btn-success">Cancel</a>
+                    <a href="{% url 'accounts:account-delete-confirm' %}" class="btn btn-danger">Delete Account</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,41 @@
+{% extends 'back-base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Customer KYC Form{% endblock head_title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+
+                        <li class="breadcrumb-item active">Customer KYC Form</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Customer KYC Form</h4>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        {% if request.user.is_authenticated %}
+            <div class="col-12">
+                {% include 'includes/alerts.html' %}
+                {% if request.user.role == 'CUSTOMER' %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Customer KYC Form</h3>  
+                            <p>Data Saved</p>
+                        </div>
+                    </div>
+                    
+                {% else %}
+                    <p>You currently do not have access to this page. Please <a href="{% url 'contacts:contact-form' %}">contact us</a> for further assistance.</p>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}

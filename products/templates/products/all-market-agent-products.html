@@ -1,0 +1,93 @@
+{% extends "back-base.html" %}
+
+{% load static %}
+{% block head_title %}Market Agents Products List{% endblock head_title %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Market Agents Products List</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">
+                    Market Agents Products List
+                </h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <!--
+                        by product
+                        by 
+                        Agent
+                        Product name
+                        Category
+                        Product type
+                        Product variety
+                        Zone
+                        State
+                        Date Form
+                        Date To
+                    -->
+                        <a href="{% url 'products:get-file' %}" class="btn btn-success"><i class="uil-down-arrow"></i> Download</a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
+                        <thead>
+                            <tr>
+                                <th>SN.</th>
+                                <th>Agent</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Product Type</th>
+                                <th>Product Variety</th>
+                                <th>Price &amp; Unit</th>
+                                <th>Zone</th>
+                                <th>State</th>
+                                <th>Market</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in all_market_agent_products %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="{% url 'products:admin-market-agent-products' product.agent.username %}">{{ product.agent.username }}</a></td>
+                                <td><a href="{% url 'products:market-agent-product-details' product.id %}">{{ product.product_name }}</a></td>
+                                <td>{{ product.category }}</td>
+                                <td>{{ product.product_type }}</td>
+                                <td>{{ product.product_variety }}</td>
+                                <td>&#8358;{{ product.price }}/{{ product.price_unit }}</td>
+                                <td>{{ product.zone }}</td>
+                                <td>{{ product.state }}</td>
+                                <td>{{ product.market_name }}</td>
+                                <td>{{ product.created_at | date }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+                                            

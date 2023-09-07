@@ -1,0 +1,156 @@
+{% extends "front-base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block head_title %}Place Order{% endblock head_title %}
+
+{% block content %}
+
+    <div class="ltn__breadcrumb-area ltn__breadcrumb-area-1 ltn__breadcrumb-color-white bg-overlay-theme-black-60 bg-image" data-bg="{% static 'frontend/img/bg/01.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
+                        <div class="section-title-area ltn__section-title-2">
+                        <h1 class="section-title white-color">Truck Summary</h1>
+                        </div>
+                        <div class="ltn__breadcrumb-list">
+                            <ul>
+                                <li><a href="{% url 'pages:index' %}">Home</a></li>
+                                <li>Truck Summary</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- BREADCRUMB AREA END -->
+
+    <!-- SHOPING CART AREA START -->
+    <div class="liton__shoping-cart-area mb-120">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1><a href="{% url 'products:public-products' %}">Products</a></h1>
+                    <div class="shoping-cart-inner">
+                     <strong>Back to Truck</strong><br><br>
+                        <div class="shoping-cart-table table-responsive">
+                            <table class="table">
+                                <!-- <thead>
+                                    <th class="cart-product-remove">Remove</th>
+                                    <th class="cart-product-image">Image</th>
+                                    <th class="cart-product-info">Product</th>
+                                    <th class="cart-product-price">Price</th>
+                                    <th class="cart-product-quantity">Quantity</th>
+                                    <th class="cart-product-subtotal">Subtotal</th>
+                                </thead> -->
+                                <tbody>
+                                    {% for item in truck %}
+                                    {% with product=item.product %}
+                                        <div data-index="{{ product.id }}" class="product-item">
+                                            <tr>
+                                                <td class="cart-product-image">
+                                                    <img src="{{ product.main_picture.url }}" alt="#">
+                                                </td>
+                                                <td class="cart-product-info">
+                                                    Product:<br><strong>{{ product.product_name }}</strong>
+                                                </td>
+                                                <td class="cart-product-price">Price:
+                                                    <br><strong>&#8358;{{ product.price | intcomma }}</strong>
+                                                </td>
+                                                <td class="cart-product-quantity">
+                                                    <div>QTY:<br><strong>{{ item.qty }} Truck(s)</strong></div>
+                                                </td>
+                                                <td class="cart-product-info">
+                                                    <div>Delivery Address:<br><strong>{{ item.addr }}</strong></div>
+                                                </td>
+                                            </tr>
+                                        </div>
+                                    {% endwith %}
+                                    {% empty %}
+                                        No products selected
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if truck %}
+                <div class="row mb-10">
+                    <div class="col-lg-12 pull-right" style="text-align:right">
+                        <span style="font-size:20px"><strong>Sub Total: &#8358;<div id="subtotal" class="d-inline-flex">{{ truck.get_total_price | intcomma }}</div></strong><span>
+                    </div>
+                </div>
+            {% endif %}
+            
+
+
+            {% if truck %}
+            <div class="row">
+                <div class="col-lg-6 mt-2">
+                    <p>
+                        <strong>Note:</strong> The <u>Sub total</u> above is the amount payable for the product(s) selected.<br />
+                        If we deliver to your location, charges will be communicated.
+                    </p>
+                    <p>
+                        <div class="alert alert-warning"> <strong>Delivery to multiple locations attracts commensurate charges.</div>
+                    </p>
+                </div>                        
+            
+                <div class="col-lg-6">
+                    <h4>Truck Tub Total</h4>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Truck Subtotal</td>
+                                <td><strong>&#8358;{{ truck.get_total_price | intcomma }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Delivery Fee</td>
+                                <td>To be computed</td>
+                            </tr>
+                            <tr>
+                                <td>Order Total</td>
+                                <td><strong>&#8358;<div id="subtotal" class="d-inline-flex">{{ truck.get_total_price | intcomma }}</div></strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                        <br>
+                        <a href="{% url 'orders:order-add' %}" class="theme-btn-1 btn">Place Order</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        //Place Order
+        $(document).on('click', '#order-add', function (ev){
+            ev.preventDefault();
+            var prodid = $(this).data('index');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "orders:order-add" %}',
+                data: {
+                    productid: $(this).data('index'),
+                    productqty: $('#select'+ prodid +' option:selected').text(),
+                    deliveryaddr: $('#delivery-address').value(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+                
+                success: function (json) {
+                    document.getElementById("truck-qty").innerHTML = json.qty
+                    document.getElementById("subtotal").innerHTML = json.subtotal
+                    window.location.replace('{% url "orders:order-placed" %}')
+                },
+                error: function (xhr, errmsg, err) {
+
+                },
+            });
+        })
+    </script>
+{% endblock content %}

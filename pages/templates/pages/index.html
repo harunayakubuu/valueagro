@@ -1,0 +1,429 @@
+{% extends "front-base.html" %}
+{% load static %}
+{% load humanize %}
+{% block head_title %}Home{% endblock head_title %}
+
+{% block meta %}
+    <meta name="description" property="og:description" content="This page lists the various products available at including price and description for each product">
+    <meta name="keywords" content="Value, Agro, Synergy, Agriculture, Products, Fertilizer">
+{% endblock meta %}
+
+
+{% block content %}
+
+    <div class="ltn__slider-area ltn__slider-2--- ltn__slider-6 section-bg-2">
+        <div class="ltn__slide-one-active slick-slide-arrow-1 slick-slide-dots-1 arrow-white">
+            <!-- ltn__slide-item -->
+            <div class="ltn__slide-item ltn__slide-item-2--- ltn__slide-item-6 text-color-white bg-image bg-overlay-theme-black-70" data-bg="{% static 'frontend/img/slider/04.png' %}">
+                <div class="ltn__slide-item-inner text-center">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 align-self-center">
+                                <div class="slide-item-info">
+                                    <div class="slide-item-info-inner ltn__slide-animation">
+                                        <!--<div class="slide-video mb-50">
+                                            <a class="ltn__video-icon-2 ltn__video-icon-2-border--- ltn__secondary-bg" href="../../../../../external.html?link=https://www.youtube.com/embed/ATI7vfCgwXE?autoplay=1&amp;showinfo=0" data-rel="lightcase:myCollection">
+                                                <i class="fa fa-play"></i>
+                                            </a>
+                                        </div>-->
+                                        <h6 class="slide-sub-title white-color animated">100% Genuine Products</h6>
+                                        <h3 class="text-uppercase animated ">Ultimate Source of Farm Produce,</h3>
+                                        <h3 class="text-uppercase animated ">Fertilizers &amp; Agro Chemicals</h3>
+                                        <div class="btn-wrapper animated">
+                                            <a href="{% url 'products:public-products' %}" class="theme-btn-1 btn btn-effect-1 text-uppercase">Explore Products</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+        </div>
+    </div>
+
+    <div class="ltn__about-us-area pb-115 mt-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 align-self-center">
+                    <div class="about-us-img-wrap ltn__img-shape-left  about-img-left">
+                        <img src="{% static 'frontend/img/banner.jpg' %}" alt="Image">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="about-us-info-wrap">
+                        <div class="">
+                            <h1 class="section-title">Value Agro Allied</h1>
+                            
+                            <p style="text-align:justify">Our goal is to identify quality grains for local and export markets. We add value through a series of activities that ensure meeting the customers’ specifications. We work with local and commercial farmers, marketers, and transporters for effective delivery.</p>
+                            <p style="text-align:justify">Our value lies in building good and sustainable customer relationships and providing our farmers with one more outlet for their products. We work with government agencies to ensure that we are 100% operating within the governing rules and regulations.</p>
+                            <p style="text-align:justify">We wholly private sector entity with investors across Nigeria and a network of farmers and farming communities. We have taken time to build trust with the farming communities and we are aware of our social and environmental responsibilities.</p>
+
+                            <div class="list-item-with-icon">
+                                <ul>
+                                    {% for service in services %}
+                                    <li><a href="{% url 'pages:service-details' service.id %}">{{ service.title }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--
+    <div class="ltn__img-slider-area ltn__img-slider-2 section-bg-2 pt-115 pb-90">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area ltn__section-title-2 text-center">
+                        <h6 class="section-subtitle ltn__secondary-color"></h6>
+                        <h1 class="section-title">We Have Done<span>.</span></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row ltn__image-slider-2-active slick-arrow-1 slick-arrow-1-inner">
+                <div class="col-lg-12">
+                    <div class="ltn__img-slide-item-2">
+                        <a href="{% static 'frontend/img/img-slide/1.jpg' %}" data-rel="lightcase:myCollection">
+                            <img src="{% static 'frontend/img/img-slide/1.jpg' %}" alt="Image">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="ltn__img-slide-item-2">
+                        <a href="{% static 'frontend/img/img-slide/2.jpg' %}" data-rel="lightcase:myCollection">
+                            <img src="{% static 'frontend/img/img-slide/2.jpg' %}" alt="Image">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="ltn__img-slide-item-2">
+                        <a href="{% static 'frontend/img/img-slide/3.jpg' %}" data-rel="lightcase:myCollection">
+                            <img src="{% static 'frontend/img/img-slide/3.jpg' %}" alt="Image">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="ltn__img-slide-item-2">
+                        <a href="{% static 'frontend/img/img-slide/4.jpg' %}" data-rel="lightcase:myCollection">
+                            <img src="{% static 'frontend/img/img-slide/4.jpg' %}" alt="Image">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="ltn__img-slide-item-2">
+                        <a href="{% static 'frontend/img/img-slide/1.jpg' %}" data-rel="lightcase:myCollection">
+                            <img src="{% static 'frontend/img/img-slide/1.jpg' %}" alt="Image">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="ltn__img-slide-item-2">
+                        <a href="{% static 'frontend/img/img-slide/2.jpg' %}" data-rel="lightcase:myCollection">
+                            <img src="{% static 'frontend/img/img-slide/2.jpg' %}" alt="Image">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+    </div>
+    
+
+    {% if services %}
+    <div class="ltn__service-area section-bg-1 pt-115 pb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area ltn__section-title-2 text-center">
+                        <h1 class="section-title white-color---">Our Services</h1>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+
+                {% for service in services %}
+
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="ltn__service-item-1">
+                            <div class="service-item-img">
+                                <a href="{% url 'pages:service-details' service.id %}"><img src="{{ service.picture.url }}" alt="#"></a>
+                            </div>
+                            <div class="service-item-brief">
+                                <h3><a href="{% url 'pages:service-details' service.id %}">{{ service.title }}</a></h3>
+                                <p>{{ service.description | safe | truncatewords:10 }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+    <div class="ltn__banner-area mt-120 mt--90 d-none">
+        <div class="container">
+            <div class="row ltn__custom-gutter--- justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="ltn__banner-item">
+                        <div class="ltn__banner-img">
+                            <a href="#"><img src="{% static 'frontend/img/banner/1.jpg' %}" alt="Banner Image"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="ltn__banner-item">
+                        <div class="ltn__banner-img">
+                            <a href="#"><img src="{% static 'frontend/img/banner/2.jpg' %}" alt="Banner Image"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="ltn__banner-item">
+                        <div class="ltn__banner-img">
+                            <a href="#"><img src="{% static 'frontend/img/banner/1.jpg' %}" alt="Banner Image"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    {% if products %}
+    <div class="ltn__product-area ltn__product-gutter pt-115 pb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area ltn__section-title-2 text-center">
+                        <h1 class="section-title">New Products</h1>
+                        <div style="font-size:20px">Go to <a href="{% url 'products:public-products' %}" style="color:blue">Products</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ltn__tab-product-slider-one-active--- slick-arrow-1">
+                {% for product in products %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="ltn__product-item ltn__product-item-3 text-center">
+                        <div class="product-img">
+                            <a href="{{ product.get_absolute_url }}"><img src="{{ product.main_picture.url }}" alt="#"></a>
+                            <!--<div class="product-badge">
+                                <ul>
+                                    <li class="sale-badge">New</li>
+                                </ul>
+                            </div>-->
+                            
+                        </div>
+                        <div class="product-info">
+                            
+                            <h2 class="product-title"><a href="{{ product.get_absolute_url }}">{{ product.product_name }}</a></h2>
+                            <div class="product-price">
+                                <span>&#8358;{{ product.price|intcomma }}/{{ product.price_unit|title }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+    {% if testimonials %}
+    <div class="ltn__testimonial-area section-bg-1 pt-290 pb-70">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area ltn__section-title-2 text-center">
+                        <h6 class="section-subtitle ltn__secondary-color">// Testimonials</h6>
+                        <h1 class="section-title">Clients Feedbacks<span>.</span></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row ltn__testimonial-slider-3-active slick-arrow-1 slick-arrow-1-inner">
+                
+                <div class="col-lg-12">
+                    <div class="ltn__testimonial-item ltn__testimonial-item-4">
+                        <div class="ltn__testimoni-img">
+                            <img src="{% static 'frontend/img/testimonial/6.jpg' %}" alt="#">
+                        </div>
+                        <div class="ltn__testimoni-info">
+                            <p>Customer Testimony </p>
+                            <h4>Name</h4>
+                            <h6>Role</h6>
+                        </div>
+                        <div class="ltn__testimoni-bg-icon">
+                            <i class="far fa-comments"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+    {% if recent_activities %}
+    <div class="ltn__blog-area pt-115 pb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area ltn__section-title-2 text-center">
+                        <h1 class="section-title white-color---">Our Recent <a href="{% url 'blog:public-activities' %}">Activities</a></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row  ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal">
+                {% for activity in recent_activities %}
+                <div class="col-lg-12">
+                    <div class="ltn__blog-item ltn__blog-item-3">
+                        <div class="ltn__blog-img">
+                            <a href="{{ activity.get_absolute_url }}"><img src="{{ activity.image.url }}" alt="#"></a>
+                        </div>
+                        <div class="ltn__blog-brief">
+                            <div class="ltn__blog-meta">
+                                <ul>
+                                    <li class="ltn__blog-author">
+                                        <a href="#"><i class="far fa-user"></i>by: {{ activity.author.username | upper }}</a>
+                                    </li>
+                                    <li class="ltn__blog-tags">
+                                        <a href="#"><i class="fas fa-tags"></i>{{ activity.category }}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <h3 class="ltn__blog-title"><a href="{{ activity.get_absolute_url }}">{{ activity.title }}</a></h3>
+                            <div class="ltn__blog-meta-btn">
+                                <div class="ltn__blog-meta">
+                                    <ul>
+                                        <li class="ltn__blog-date"><i class="far fa-calendar-alt"></i>{{ activity.created_at|date }}</li>
+                                    </ul>
+                                </div>
+                                <div class="ltn__blog-btn">
+                                    <a href="{{ activity.get_absolute_url }}">Read more</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!--
+    <br><br>
+    
+    <div class="ltn__feature-area before-bg-bottom-2 mb--30--- plr--5">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    
+                    <div class="ltn__feature-item-box-wrap ltn__border-between-column white-bg">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-xl-6 col-md-6">
+                                    <div class="ltn__feature-item ltn__feature-item-8">
+                                        <div class="ltn__feature-icon">
+                                            <img src="{% static 'frontend/img/icons/icon-img/11.png' %}" alt="#">
+                                        </div>
+                                        <div class="ltn__feature-info">
+                                            <h4>Fertilizer Products</h4>
+                                            <p>
+                                                We Provide All Categories of Fertilizer Products
+                                            </p>
+                                        </div>
+                                    </div>
+                                
+                                
+                                    <div class="ltn__feature-item ltn__feature-item-8">
+                                        <div class="ltn__feature-icon">
+                                            <img src="{% static 'frontend/img/icons/icon-img/11.png' %}" alt="#">
+                                        </div>
+                                        <div class="ltn__feature-info">
+                                            <h4>Fertilizer Products</h4>
+                                            <p>
+                                                We Provide All Categories of Fertilizer Products
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="ltn__feature-item ltn__feature-item-8">
+                                        <div class="ltn__feature-icon">
+                                            <img src="{% static 'frontend/img/icons/icon-img/11.png' %}" alt="#">
+                                        </div>
+                                        <div class="ltn__feature-info">
+                                            <h4>Fertilizer Products</h4>
+                                            <p>
+                                                We Provide All Categories of Fertilizer Products
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xl-6 col-md-6">
+                                    <div class="ltn__feature-item ltn__feature-item-8">
+                                        <div class="ltn__feature-icon">
+                                            <img src="{% static 'frontend/img/icons/icon-img/11.png' %}" alt="#">
+                                        </div>
+                                        <div class="ltn__feature-info">
+                                            <h4>Fertilizer Products</h4>
+                                            <p>
+                                                We Provide All Categories of Fertilizer Products
+                                            </p>
+                                        </div>
+                                    </div>
+                                
+                                
+                                    <div class="ltn__feature-item ltn__feature-item-8">
+                                        <div class="ltn__feature-icon">
+                                            <img src="{% static 'frontend/img/icons/icon-img/11.png' %}" alt="#">
+                                        </div>
+                                        <div class="ltn__feature-info">
+                                            <h4>Fertilizer Products</h4>
+                                            <p>
+                                                We Provide All Categories of Fertilizer Products
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="ltn__feature-item ltn__feature-item-8">
+                                        <div class="ltn__feature-icon">
+                                            <img src="{% static 'frontend/img/icons/icon-img/11.png' %}" alt="#">
+                                        </div>
+                                        <div class="ltn__feature-info">
+                                            <h4>Fertilizer Products</h4>
+                                            <p>
+                                                We Provide All Categories of Fertilizer Products
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+
+{% endblock content %}
