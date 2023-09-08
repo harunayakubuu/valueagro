@@ -358,7 +358,7 @@ setTimeout(function(){
         --------------------------------------------------------- */
         $('.ltn__slide-one-active').slick({
             autoplay: true,
-            autoplaySpeed: 10000,
+            autoplaySpeed: 8000,
             arrows: true,
             dots: true,
             fade: true,
@@ -387,7 +387,7 @@ setTimeout(function(){
         --------------------------------------------------------- */
         $('.ltn__slide-active-2').slick({
             autoplay: true,
-            autoplaySpeed: 10000,
+            autoplaySpeed: 8000,
             arrows: true,
             dots: true,
             fade: true,
