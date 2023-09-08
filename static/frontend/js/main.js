@@ -47,7 +47,7 @@
 
 setTimeout(function(){
 	$('#message').fadeOut('slow');
-  }, 5000);
+  }, 6000);
   // Custom message fadeout
 
   
@@ -357,23 +357,23 @@ setTimeout(function(){
             15. Slider One Active 
         --------------------------------------------------------- */
         $('.ltn__slide-one-active').slick({
-            autoplay: false,
-            autoplaySpeed: 2000,
+            autoplay: true,
+            autoplaySpeed: 10000,
             arrows: true,
             dots: true,
             fade: true,
             cssEase: 'linear',
             infinite: true,
-            speed: 300,
+            speed: 2000,
             slidesToShow: 1,
             slidesToScroll: 1,
             prevArrow: '<a class="slick-prev"><i class="fas fa-arrow-left" alt="Arrow Icon"></i></a>',
             nextArrow: '<a class="slick-next"><i class="fas fa-arrow-right" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
-                    breakpoint: 1200,
+                    breakpoint: 1500,
                     settings: {
-                        arrows: false,
+                        arrows: true,
                         dots: true,
                     }
                 }
@@ -387,20 +387,20 @@ setTimeout(function(){
         --------------------------------------------------------- */
         $('.ltn__slide-active-2').slick({
             autoplay: false,
-            autoplaySpeed: 2000,
+            autoplaySpeed: 10000,
             arrows: false,
             dots: true,
             fade: true,
             cssEase: 'linear',
             infinite: true,
-            speed: 300,
+            speed: 2000,
             slidesToShow: 1,
             slidesToScroll: 1,
             prevArrow: '<a class="slick-prev"><i class="fas fa-arrow-left" alt="Arrow Icon"></i></a>',
             nextArrow: '<a class="slick-next"><i class="fas fa-arrow-right" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
-                    breakpoint: 1200,
+                    breakpoint: 1500,
                     settings: {
                         arrows: false,
                         dots: true,

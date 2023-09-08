@@ -9,7 +9,8 @@ User = get_user_model()
 class MyAdmin(UserAdmin):
     list_display =('username', 'email', 'first_name', 'middle_name', 'last_name', 'is_active', 'is_superuser', 'last_login')
     search_fields = ('email', 'username', 'phone_number')
-    readonly_fields = ('id', 'phone_number', 'first_name', 'middle_name', 'last_name', 'date_joined', 'last_login')
+    readonly_fields = ('date_joined', 'last_login')
+    # readonly_fields = ('id', 'phone_number', 'first_name', 'middle_name', 'last_name', 'date_joined', 'last_login')
     ordering = ('username',)
     list_display_links = ['username',]
 

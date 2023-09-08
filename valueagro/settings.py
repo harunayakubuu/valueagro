@@ -61,8 +61,8 @@ INSTALLED_APPS = [
 ]
 
 
-# SITE_ID = 1
-SITE_ID = 2
+SITE_ID = 1
+# SITE_ID = 2
 
 
 MIDDLEWARE = [
@@ -199,8 +199,8 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 
 # Media Files Config
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 #AWS Config
