@@ -386,9 +386,9 @@ setTimeout(function(){
             15-2. Slider Active 2
         --------------------------------------------------------- */
         $('.ltn__slide-active-2').slick({
-            autoplay: false,
+            autoplay: true,
             autoplaySpeed: 10000,
-            arrows: false,
+            arrows: true,
             dots: true,
             fade: true,
             cssEase: 'linear',
@@ -402,7 +402,7 @@ setTimeout(function(){
                 {
                     breakpoint: 1500,
                     settings: {
-                        arrows: false,
+                        arrows: true,
                         dots: true,
                     }
                 }
@@ -417,7 +417,7 @@ setTimeout(function(){
         --------------------------------------------------------- */
         $('.ltn__product-slider-one-active').slick({
             arrows: true,
-            dots: false,
+            dots: true,
             infinite: true,
             speed: 300,
             slidesToShow: 3,
@@ -437,7 +437,7 @@ setTimeout(function(){
                     settings: {
                         slidesToShow: 2,
                         slidesToScroll: 1,
-                        arrows: false,
+                        arrows: true,
                         dots: true,
                     }
                 },
